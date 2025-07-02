@@ -12,58 +12,96 @@ The structure of the repository:
 | Directory             | Description                              |
 | --------------------- | ---------------------------------------- |
 | `00_unfiltered_bams/` | Source relevant ENCODE snATAC datasets |
-| `01_sinto/`           | Create fragment files; extract retained read names |
-| `02_arrows/`          | In preparation for ArchR, create arrow files for each BAM |
-| `03_archr/`           | Store the ArchR project itself  |
-| `03_filtered_bams/`   | Filter BAMs to include proper cell barcodes and reads |
-| `03_peakcalls/`       | Call Peak Coordinates for all cell-line BAMs |
-| `04_downsampling/`    | Call Peak Coordinates for all cell-line BAMs |
+| `01_sinto/`           | Create fragment files and extract retained read names |
+| `02_arrows/`          | Prepare arrow files for each BAM (required for ArchR) |
+| `03_archr/`           | Build ArchR project and perform quality filtering  |
+| `03_filtered_bams/`   | Filter BAMs to include valid cell barcodes and high-quality reads |
+| `03_peakcalls/`       | Call and standardize peak locations for all cell lines |
+| `04_scripts/`         | Scripts used to generate downsampled BAMs with scBAMpler |
+| `04_downsampling/`    | Downsampled BAM locations |
+
 
 ```
 scFootprintBenchmark
 │   README.md
 │
 └─── 00_unfiltered_bams/
-│   │   00_unfiltered_bams.sh : wget commands to pull ENCODE links
+│   │   00_unfiltered_bams.sh : wget commands to download relevant ENCODE BAM files
 │
 │
 └─── 01_sinto/
-│   │   01_sinto.sh : creates fragment.tsv.gz & outputs read-QNAMES
-│   │
-│   └─── sinto.zip : sinto was installed via pip, and a few files were adapted by hand to allow for the QNAME direct output.
-|                    fragments.py, utils.py, cli.py, arguments.py are the only edited files
-|                    this zip file would naturally be located in /miniforge/envs/env_name/lib/python3.10/site-packages/sinto/
+│   │   01_sinto.sh : creates fragment.tsv.gz and extracts read QNAMEs
+│   └── sinto.zip : customized version of sinto (installed via pip)
+│       └── Modified files: fragments.py, utils.py, cli.py, arguments.py
+│           Edits (denoted #AMANDA) enabled direct QNAME output during fragment creation.
+│           The modified package was originally located in: /miniforge/envs/downsampling/lib/python3.10/site-packages/sinto/
 │ 
 └─── 02_arrows/
-│   │   02_arrows.R : Rscript to generate 24 arrow files
-│   │   ArchR-createArrows*.log : log file with arrow creation info
-│   │   QualityControl.tar.gz : per-replicate quality control images from ArchR. 
+│   │   02_arrows.R : R script to generate 24 arrow files (via ArchR)
+│   │   ArchR-createArrows*.log : logs from arrow file generation
+│   │   QualityControl.tar.gz : per-replicate QC images from ArchR 
 │
 │
 └─── 03_archr/
-│   │   03_archr.R : creates archR project, process cell lines together, and performs quality filtering. 
+│   │   03_archr.R : creates ArchR project, process cell lines together, and performs quality filtering
 │   │
-│   └─── ENCODE_snATAC.tar.gz : ArchR project-- not directly provided due to size limitations, but can be downloaded @ (360M)
+│   └─── ENCODE_snATAC.tar.gz : ArchR project (not included due to size; downloadable separately, ~360MB)
 │
 │
 └─── 03_filtered_bams/
-│   │   03_filtered_bams.sh : filters bams to remove (1) reads removed by sinto prior to fragment creation (via samtools)
-|   |                                                (2) reads not from chr1-22, X, or Y (via samtools)
-|   |                                                (3) reads belonging to a cell barcode that was removed in ArchR (via sinto)
+│   │   03_filtered_bams.sh : filters BAMs to remove (1) low-quality reads filtered by sinto prior to fragment creation (via samtools)
+|   |                                                (2) reads not mapping to chr1-22, X, or Y (via samtools)
+|   |                                                (3) reads associated with filtered-out cell barcodes in ArchR (via sinto)
 |   | 
-│   │   *.bam : not directly provided due to size limitations, but can be downloaded @ (568G)
+│   │   *.bam : (not included due to size; downloadable separately, 568G)
 |
+│
 └─── 03_peakcalls/ 
-│   │   MACS_*.R : Rscript that will call peaks for a bam file (via macs3), standardize the regions to 500bp,
-│   │              and perform an iterative overlap procedure adatpted from ArchR.
-│   │              **NOTE** a user friendly version of this code is in the scBAMpler code base @ https://github.com/aseveritt/scBAMpler
-│   │   *_500bp.exclusion.bed : standardized cell line peak files
-│   │   Union_filt_500bp.exclusion.bed : iterative overlap performed on the all the cell-line-standardized peak files, to generate a single peak set representing the union of all possible. Used in the cell-homogeneity and differential binding module sections.  
+│   │   MACS_*.R : Rscript to (1) call peaks from BAM file using macs3 (2) standardize regions to 500bp (3) perform iterative peak overlap (adotpted from ArchR)
+│   │              **NOTE** a user-friendly version is available at https://github.com/aseveritt/scBAMpler
+│   │   *_500bp.exclusion.bed.gz : standardized peak sets per cell line 
+│   │   Union_filt_500bp.exclusion.bed.gz : union of standardized peaks across cell lines, also processed via iterative overlap;
+│   │                                       used in the cell-homogeneity and differential binding module analyses  
 │   │ 
-│   └─── qsubs/ -- stdin and stdout files containing details about each file. 
+│   └─── qsubs/ : stdin/stdout logs and metadata from peak-calling job submissions
+|
+|
+└─── 04_scripts/
+│   │   scBAMpler_wrapper.ipynb : Script used to generate all scBAMpler commands and join summary statistics into one file. 
+│   │
+│   └───
+|
 |
 └─── 04_downsampling/
-│   │
-│   └─── 
+│   └─── 00_celldicts/ : Location where all scBAMpler cell line dictionaries are stored. 
+│   └─── 00_cellsim/   : Location input files for the scBAMpler cell-similarity extension are stored. 
+│   └─── 01_original/  : Fragment files for 5 cell lines of interest (required for PRINT)
+│   └─── 02_cells/     : Location where all cell-downsampled files are stored.
+│   │   |                **Note**, the BAM and fragment files are no longer stored.
+│   │   |                Only the read-QNAMEs are, which can be used to regenerate BAMs using scBAmpler/samtools 
+│   │   └─── c1000/
+│   │   └─── c2500/
+│   │   └─── c5000/
+│   │   └─── c7500/
+│   │   └─── c10000/
+│   │   └─── c20000/
+│   │   └─── c30000/
+│   │   └─── c40000/
+│   │   └─── c50000/
+│   │ 
+│   └─── 03_reads/
+│   │ 
+│   └─── 04_frip/
+│   │ 
+│   └─── 06_cellsim/
+│   │ 
+│   │   sampling_stats.csv : Summary information for all the data-quality downsampled datasets. 
+│   │   sampling_stats_cellsim.csv : Summary information for all the cell-homogeneity downsampled datasets. 
+|
+|
+└─── 05_scripts/
 ```
+
+
+---------------
 
