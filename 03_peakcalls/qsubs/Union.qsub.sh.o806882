@@ -1,0 +1,62 @@
+================================================================================
+====================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================
+=======================================
+===========================================================================================================================================================================================
+====
+=====================================================================================================================================================================================================================================================================================================================================
+=====================================================================================================
+==============
+===========================================
+=====================================================================================================
+==============================================================================================
+===========
+==============================================================
+========
+=========================
+================================================================
+=================
+=====================
+==============
+=====================
+=============================
+========
+================================================
+========
+3791859 total summits to begin with
+424269 peaks overlaped no other peak
+174732 peaks overlaped one other peak -- removing 174732 peaks
+the remaining peaks were summarized into 586347 peaks
+Ultimately, there are 1185348 peaks left
+==============================================================
+job_number:                 806882
+exec_file:                  job_scripts/806882
+submission_time:            Tue Nov 19 14:29:44 2024
+owner:                      aseveritt
+uid:                        61365
+group:                      pollard
+gid:                        22000
+sge_o_home:                 /wynton/home/pollard/aseveritt
+sge_o_log_name:             aseveritt
+sge_o_path:                 /wynton/home/pollard/aseveritt/.conda/envs/downsampling/bin:/wynton/home/cbi/shared/software/CBI/miniforge3-24.9.2-0/condabin:/wynton/home/cbi/shared/software/CBI/miniforge3-24.9.2-0/bin:/opt/sge/bin:/opt/sge/bin/lx-amd64:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/wynton/home/pollard/aseveritt/.local/bin:/wynton/home/pollard/aseveritt/bin
+sge_o_shell:                /bin/bash
+sge_o_workdir:              /pollard/data/projects/aseveritt/encode_snatacseq/03_peakcalls/qsubs
+sge_o_host:                 dev2
+account:                    sge
+cwd:                        /pollard/data/projects/aseveritt/encode_snatacseq/03_peakcalls//qsubs/
+merge:                      y
+hard resource_list:         mem_free=10G,scratch=25G,h_rt=86400,x86-64-v=4
+mail_list:                  aseveritt@dev2.wynton.ucsf.edu
+notify:                     FALSE
+job_name:                   Union.qsub.sh
+jobshare:                   0
+hard_queue_list:            !*gpu.q
+shell_list:                 NONE:/bin/bash
+env_list:                   TERM=NONE
+script_file:                Union.qsub.sh
+parallel environment:  smp range: 24
+project:                    pollardlab
+binding:                    NONE
+job_type:                   NONE
+usage         1:            cpu=02:18:49, mem=16286.07518 GB s, io=0.25989 GB, vmem=4.165G, maxvmem=49.557G
+binding       1:            NONE
+scheduling info:            (Collecting of scheduler job information is turned off)

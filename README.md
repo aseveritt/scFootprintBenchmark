@@ -17,7 +17,6 @@ The structure of the repository:
 | `03_archr/`           | Store the ArchR project itself  |
 | `03_filtered_bams/`   | Filter BAMs to include proper cell barcodes and reads |
 | `03_peakcalls/`       | Call Peak Coordinates for all cell-line BAMs |
-| `03_scripts`          | Scripts that are used in all the 03_* directories |
 | `04_downsampling/`    | Call Peak Coordinates for all cell-line BAMs |
 
 ```
@@ -44,20 +43,26 @@ scFootprintBenchmark
 └─── 03_archr/
 │   │   03_archr.R : creates archR project, process cell lines together, and performs quality filtering. 
 │   │
-│   └─── ENCODE_snATAC.tar.gz : ArchR project-- not directly provided due to size limitations, but can be downloaded @ (~Gb)
+│   └─── ENCODE_snATAC.tar.gz : ArchR project-- not directly provided due to size limitations, but can be downloaded @ (360M)
 │
 │
 └─── 03_filtered_bams/
-│   │   03_filtered_bams.sh: filters bams to remove (1) reads removed by sinto prior to fragment creation (via samtools)
-|   |                                               (2) reads not from chr1-22, X, or Y (via samtools)
-|   |                                               (3) reads belonging to a cell barcode that was removed in ArchR (via sinto)
-│   │   *.bam : not directly provided due to size limitations, but can be downloaded @ (~Gb)
+│   │   03_filtered_bams.sh : filters bams to remove (1) reads removed by sinto prior to fragment creation (via samtools)
+|   |                                                (2) reads not from chr1-22, X, or Y (via samtools)
+|   |                                                (3) reads belonging to a cell barcode that was removed in ArchR (via sinto)
+|   | 
+│   │   *.bam : not directly provided due to size limitations, but can be downloaded @ (568G)
 |
 └─── 03_peakcalls/ 
-│   │   *_500bp.exclusion.bed -- standardized cell line peak files 
-│   └─── logs/ -- stdout files with details
+│   │   MACS_*.R : Rscript that will call peaks for a bam file (via macs3), standardize the regions to 500bp,
+│   │              and perform an iterative overlap procedure adatpted from ArchR.
+│   │              **NOTE** a user friendly version of this code is in the scBAMpler code base @ https://github.com/aseveritt/scBAMpler
+│   │   *_500bp.exclusion.bed : standardized cell line peak files
+│   │   Union_filt_500bp.exclusion.bed : iterative overlap performed on the all the cell-line-standardized peak files, to generate a single peak set representing the union of all possible. Used in the cell-homogeneity and differential binding module sections.  
+│   │ 
+│   └─── qsubs/ -- stdin and stdout files containing details about each file. 
 |
-└─── 03_scripts/
+└─── 04_downsampling/
 │   │
 │   └─── 
 ```

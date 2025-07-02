@@ -1,0 +1,441 @@
+INFO  @ 18 Nov 2024 17:19:32: [760 MB] 
+# Command line: callpeak -g 2.9e+09 --name A549 --treatment /pollard/data/projects/aseveritt/encode_snatacseq/03_filtered_bams//A549-cellFilt.bam --outdir /pollard/data/projects/aseveritt/encode_snatacseq/03_peakcalls/ --call-summits --keep-dup all --nomodel --nolambda --shift -100 --extsize 200 -q 0.05
+# ARGUMENTS LIST:
+# name = A549
+# format = AUTO
+# ChIP-seq file = ['/pollard/data/projects/aseveritt/encode_snatacseq/03_filtered_bams//A549-cellFilt.bam']
+# control file = None
+# effective genome size = 2.90e+09
+# band width = 300
+# model fold = [5, 50]
+# qvalue cutoff = 5.00e-02
+# The maximum gap between significant sites is assigned as the read length/tag size.
+# The minimum length of peaks is assigned as the predicted fragment length "d".
+# Larger dataset will be scaled towards smaller dataset.
+# Range for calculating regional lambda is: 10000 bps
+# Broad region calling is off
+# Paired-End mode is off
+# Searching for subpeak summits is on
+ 
+INFO  @ 18 Nov 2024 17:19:32: [760 MB] #1 read tag files... 
+INFO  @ 18 Nov 2024 17:19:32: [760 MB] #1 read treatment tags... 
+INFO  @ 18 Nov 2024 17:19:32: [760 MB] Detected format is: BAM 
+INFO  @ 18 Nov 2024 17:19:32: [760 MB] * Input file is gzipped. 
+INFO  @ 18 Nov 2024 17:19:46: [760 MB]  1000000 reads parsed 
+INFO  @ 18 Nov 2024 17:19:50: [760 MB]  2000000 reads parsed 
+INFO  @ 18 Nov 2024 17:19:54: [760 MB]  3000000 reads parsed 
+INFO  @ 18 Nov 2024 17:20:00: [760 MB]  4000000 reads parsed 
+INFO  @ 18 Nov 2024 17:20:03: [760 MB]  5000000 reads parsed 
+INFO  @ 18 Nov 2024 17:20:07: [760 MB]  6000000 reads parsed 
+INFO  @ 18 Nov 2024 17:20:11: [760 MB]  7000000 reads parsed 
+INFO  @ 18 Nov 2024 17:20:15: [760 MB]  8000000 reads parsed 
+INFO  @ 18 Nov 2024 17:20:19: [760 MB]  9000000 reads parsed 
+INFO  @ 18 Nov 2024 17:20:24: [760 MB]  10000000 reads parsed 
+INFO  @ 18 Nov 2024 17:20:28: [760 MB]  11000000 reads parsed 
+INFO  @ 18 Nov 2024 17:20:33: [760 MB]  12000000 reads parsed 
+INFO  @ 18 Nov 2024 17:20:40: [760 MB]  13000000 reads parsed 
+INFO  @ 18 Nov 2024 17:20:49: [760 MB]  14000000 reads parsed 
+INFO  @ 18 Nov 2024 17:20:54: [760 MB]  15000000 reads parsed 
+INFO  @ 18 Nov 2024 17:20:58: [760 MB]  16000000 reads parsed 
+INFO  @ 18 Nov 2024 17:21:01: [760 MB]  17000000 reads parsed 
+INFO  @ 18 Nov 2024 17:21:07: [760 MB]  18000000 reads parsed 
+INFO  @ 18 Nov 2024 17:21:11: [760 MB]  19000000 reads parsed 
+INFO  @ 18 Nov 2024 17:21:15: [760 MB]  20000000 reads parsed 
+INFO  @ 18 Nov 2024 17:21:19: [760 MB]  21000000 reads parsed 
+INFO  @ 18 Nov 2024 17:21:23: [760 MB]  22000000 reads parsed 
+INFO  @ 18 Nov 2024 17:21:27: [760 MB]  23000000 reads parsed 
+INFO  @ 18 Nov 2024 17:21:31: [760 MB]  24000000 reads parsed 
+INFO  @ 18 Nov 2024 17:21:35: [760 MB]  25000000 reads parsed 
+INFO  @ 18 Nov 2024 17:21:40: [760 MB]  26000000 reads parsed 
+INFO  @ 18 Nov 2024 17:21:44: [760 MB]  27000000 reads parsed 
+INFO  @ 18 Nov 2024 17:21:48: [760 MB]  28000000 reads parsed 
+INFO  @ 18 Nov 2024 17:21:52: [760 MB]  29000000 reads parsed 
+INFO  @ 18 Nov 2024 17:21:56: [760 MB]  30000000 reads parsed 
+INFO  @ 18 Nov 2024 17:21:59: [760 MB]  31000000 reads parsed 
+INFO  @ 18 Nov 2024 17:22:03: [760 MB]  32000000 reads parsed 
+INFO  @ 18 Nov 2024 17:22:07: [760 MB]  33000000 reads parsed 
+INFO  @ 18 Nov 2024 17:22:11: [760 MB]  34000000 reads parsed 
+INFO  @ 18 Nov 2024 17:22:14: [760 MB]  35000000 reads parsed 
+INFO  @ 18 Nov 2024 17:22:18: [760 MB]  36000000 reads parsed 
+INFO  @ 18 Nov 2024 17:22:22: [760 MB]  37000000 reads parsed 
+INFO  @ 18 Nov 2024 17:22:26: [760 MB]  38000000 reads parsed 
+INFO  @ 18 Nov 2024 17:22:30: [760 MB]  39000000 reads parsed 
+INFO  @ 18 Nov 2024 17:22:33: [760 MB]  40000000 reads parsed 
+INFO  @ 18 Nov 2024 17:22:38: [760 MB]  41000000 reads parsed 
+INFO  @ 18 Nov 2024 17:22:45: [760 MB]  42000000 reads parsed 
+INFO  @ 18 Nov 2024 17:22:49: [760 MB]  43000000 reads parsed 
+INFO  @ 18 Nov 2024 17:22:54: [760 MB]  44000000 reads parsed 
+INFO  @ 18 Nov 2024 17:22:59: [760 MB]  45000000 reads parsed 
+INFO  @ 18 Nov 2024 17:23:04: [760 MB]  46000000 reads parsed 
+INFO  @ 18 Nov 2024 17:23:09: [760 MB]  47000000 reads parsed 
+INFO  @ 18 Nov 2024 17:23:13: [760 MB]  48000000 reads parsed 
+INFO  @ 18 Nov 2024 17:23:17: [760 MB]  49000000 reads parsed 
+INFO  @ 18 Nov 2024 17:23:21: [760 MB]  50000000 reads parsed 
+INFO  @ 18 Nov 2024 17:23:25: [760 MB]  51000000 reads parsed 
+INFO  @ 18 Nov 2024 17:23:29: [760 MB]  52000000 reads parsed 
+INFO  @ 18 Nov 2024 17:23:34: [760 MB]  53000000 reads parsed 
+INFO  @ 18 Nov 2024 17:23:39: [760 MB]  54000000 reads parsed 
+INFO  @ 18 Nov 2024 17:23:43: [760 MB]  55000000 reads parsed 
+INFO  @ 18 Nov 2024 17:23:47: [760 MB]  56000000 reads parsed 
+INFO  @ 18 Nov 2024 17:23:51: [760 MB]  57000000 reads parsed 
+INFO  @ 18 Nov 2024 17:23:55: [760 MB]  58000000 reads parsed 
+INFO  @ 18 Nov 2024 17:23:59: [760 MB]  59000000 reads parsed 
+INFO  @ 18 Nov 2024 17:24:03: [760 MB]  60000000 reads parsed 
+INFO  @ 18 Nov 2024 17:24:07: [760 MB]  61000000 reads parsed 
+INFO  @ 18 Nov 2024 17:24:11: [760 MB]  62000000 reads parsed 
+INFO  @ 18 Nov 2024 17:24:16: [760 MB]  63000000 reads parsed 
+INFO  @ 18 Nov 2024 17:24:20: [760 MB]  64000000 reads parsed 
+INFO  @ 18 Nov 2024 17:24:24: [760 MB]  65000000 reads parsed 
+INFO  @ 18 Nov 2024 17:24:29: [760 MB]  66000000 reads parsed 
+INFO  @ 18 Nov 2024 17:24:36: [760 MB]  67000000 reads parsed 
+INFO  @ 18 Nov 2024 17:24:40: [760 MB]  68000000 reads parsed 
+INFO  @ 18 Nov 2024 17:24:44: [760 MB]  69000000 reads parsed 
+INFO  @ 18 Nov 2024 17:24:48: [760 MB]  70000000 reads parsed 
+INFO  @ 18 Nov 2024 17:24:53: [760 MB]  71000000 reads parsed 
+INFO  @ 18 Nov 2024 17:24:57: [760 MB]  72000000 reads parsed 
+INFO  @ 18 Nov 2024 17:25:01: [760 MB]  73000000 reads parsed 
+INFO  @ 18 Nov 2024 17:25:05: [760 MB]  74000000 reads parsed 
+INFO  @ 18 Nov 2024 17:25:09: [760 MB]  75000000 reads parsed 
+INFO  @ 18 Nov 2024 17:25:14: [760 MB]  76000000 reads parsed 
+INFO  @ 18 Nov 2024 17:25:18: [760 MB]  77000000 reads parsed 
+INFO  @ 18 Nov 2024 17:25:25: [760 MB]  78000000 reads parsed 
+INFO  @ 18 Nov 2024 17:25:30: [760 MB]  79000000 reads parsed 
+INFO  @ 18 Nov 2024 17:25:36: [760 MB]  80000000 reads parsed 
+INFO  @ 18 Nov 2024 17:25:41: [760 MB]  81000000 reads parsed 
+INFO  @ 18 Nov 2024 17:25:46: [760 MB]  82000000 reads parsed 
+INFO  @ 18 Nov 2024 17:25:50: [760 MB]  83000000 reads parsed 
+INFO  @ 18 Nov 2024 17:25:55: [760 MB]  84000000 reads parsed 
+INFO  @ 18 Nov 2024 17:26:00: [760 MB]  85000000 reads parsed 
+INFO  @ 18 Nov 2024 17:26:04: [760 MB]  86000000 reads parsed 
+INFO  @ 18 Nov 2024 17:26:09: [760 MB]  87000000 reads parsed 
+INFO  @ 18 Nov 2024 17:26:14: [760 MB]  88000000 reads parsed 
+INFO  @ 18 Nov 2024 17:26:19: [760 MB]  89000000 reads parsed 
+INFO  @ 18 Nov 2024 17:26:23: [760 MB]  90000000 reads parsed 
+INFO  @ 18 Nov 2024 17:26:28: [760 MB]  91000000 reads parsed 
+INFO  @ 18 Nov 2024 17:26:33: [760 MB]  92000000 reads parsed 
+INFO  @ 18 Nov 2024 17:26:37: [760 MB]  93000000 reads parsed 
+INFO  @ 18 Nov 2024 17:26:42: [760 MB]  94000000 reads parsed 
+INFO  @ 18 Nov 2024 17:26:46: [760 MB]  95000000 reads parsed 
+INFO  @ 18 Nov 2024 17:26:54: [760 MB]  96000000 reads parsed 
+INFO  @ 18 Nov 2024 17:27:05: [760 MB]  97000000 reads parsed 
+INFO  @ 18 Nov 2024 17:27:09: [760 MB]  98000000 reads parsed 
+INFO  @ 18 Nov 2024 17:27:13: [760 MB]  99000000 reads parsed 
+INFO  @ 18 Nov 2024 17:27:25: [760 MB]  100000000 reads parsed 
+INFO  @ 18 Nov 2024 17:27:29: [760 MB]  101000000 reads parsed 
+INFO  @ 18 Nov 2024 17:27:33: [760 MB]  102000000 reads parsed 
+INFO  @ 18 Nov 2024 17:27:37: [760 MB]  103000000 reads parsed 
+INFO  @ 18 Nov 2024 17:27:41: [760 MB]  104000000 reads parsed 
+INFO  @ 18 Nov 2024 17:27:45: [760 MB]  105000000 reads parsed 
+INFO  @ 18 Nov 2024 17:27:50: [760 MB]  106000000 reads parsed 
+INFO  @ 18 Nov 2024 17:27:55: [760 MB]  107000000 reads parsed 
+INFO  @ 18 Nov 2024 17:28:00: [760 MB]  108000000 reads parsed 
+INFO  @ 18 Nov 2024 17:28:04: [760 MB]  109000000 reads parsed 
+INFO  @ 18 Nov 2024 17:28:09: [760 MB]  110000000 reads parsed 
+INFO  @ 18 Nov 2024 17:28:13: [760 MB]  111000000 reads parsed 
+INFO  @ 18 Nov 2024 17:28:17: [760 MB]  112000000 reads parsed 
+INFO  @ 18 Nov 2024 17:28:22: [760 MB]  113000000 reads parsed 
+INFO  @ 18 Nov 2024 17:28:27: [760 MB]  114000000 reads parsed 
+INFO  @ 18 Nov 2024 17:28:32: [760 MB]  115000000 reads parsed 
+INFO  @ 18 Nov 2024 17:28:37: [760 MB]  116000000 reads parsed 
+INFO  @ 18 Nov 2024 17:28:41: [760 MB]  117000000 reads parsed 
+INFO  @ 18 Nov 2024 17:28:45: [760 MB]  118000000 reads parsed 
+INFO  @ 18 Nov 2024 17:28:49: [760 MB]  119000000 reads parsed 
+INFO  @ 18 Nov 2024 17:28:54: [760 MB]  120000000 reads parsed 
+INFO  @ 18 Nov 2024 17:28:58: [760 MB]  121000000 reads parsed 
+INFO  @ 18 Nov 2024 17:29:03: [760 MB]  122000000 reads parsed 
+INFO  @ 18 Nov 2024 17:29:07: [760 MB]  123000000 reads parsed 
+INFO  @ 18 Nov 2024 17:29:12: [760 MB]  124000000 reads parsed 
+INFO  @ 18 Nov 2024 17:29:18: [760 MB]  125000000 reads parsed 
+INFO  @ 18 Nov 2024 17:29:23: [760 MB]  126000000 reads parsed 
+INFO  @ 18 Nov 2024 17:29:31: [760 MB]  127000000 reads parsed 
+INFO  @ 18 Nov 2024 17:29:38: [760 MB]  128000000 reads parsed 
+INFO  @ 18 Nov 2024 17:29:43: [760 MB]  129000000 reads parsed 
+INFO  @ 18 Nov 2024 17:29:48: [760 MB]  130000000 reads parsed 
+INFO  @ 18 Nov 2024 17:29:53: [760 MB]  131000000 reads parsed 
+INFO  @ 18 Nov 2024 17:30:00: [760 MB]  132000000 reads parsed 
+INFO  @ 18 Nov 2024 17:30:05: [760 MB]  133000000 reads parsed 
+INFO  @ 18 Nov 2024 17:30:10: [760 MB]  134000000 reads parsed 
+INFO  @ 18 Nov 2024 17:30:15: [760 MB]  135000000 reads parsed 
+INFO  @ 18 Nov 2024 17:30:20: [760 MB]  136000000 reads parsed 
+INFO  @ 18 Nov 2024 17:30:25: [760 MB]  137000000 reads parsed 
+INFO  @ 18 Nov 2024 17:30:31: [760 MB]  138000000 reads parsed 
+INFO  @ 18 Nov 2024 17:30:37: [760 MB]  139000000 reads parsed 
+INFO  @ 18 Nov 2024 17:30:43: [760 MB]  140000000 reads parsed 
+INFO  @ 18 Nov 2024 17:30:47: [760 MB]  141000000 reads parsed 
+INFO  @ 18 Nov 2024 17:30:52: [760 MB]  142000000 reads parsed 
+INFO  @ 18 Nov 2024 17:30:56: [760 MB]  143000000 reads parsed 
+INFO  @ 18 Nov 2024 17:31:01: [760 MB]  144000000 reads parsed 
+INFO  @ 18 Nov 2024 17:31:06: [760 MB]  145000000 reads parsed 
+INFO  @ 18 Nov 2024 17:31:11: [760 MB]  146000000 reads parsed 
+INFO  @ 18 Nov 2024 17:31:16: [760 MB]  147000000 reads parsed 
+INFO  @ 18 Nov 2024 17:31:21: [760 MB]  148000000 reads parsed 
+INFO  @ 18 Nov 2024 17:31:25: [760 MB]  149000000 reads parsed 
+INFO  @ 18 Nov 2024 17:31:30: [760 MB]  150000000 reads parsed 
+INFO  @ 18 Nov 2024 17:31:34: [760 MB]  151000000 reads parsed 
+INFO  @ 18 Nov 2024 17:31:38: [760 MB]  152000000 reads parsed 
+INFO  @ 18 Nov 2024 17:31:42: [760 MB]  153000000 reads parsed 
+INFO  @ 18 Nov 2024 17:31:46: [760 MB]  154000000 reads parsed 
+INFO  @ 18 Nov 2024 17:31:50: [760 MB]  155000000 reads parsed 
+INFO  @ 18 Nov 2024 17:31:55: [760 MB]  156000000 reads parsed 
+INFO  @ 18 Nov 2024 17:32:00: [760 MB]  157000000 reads parsed 
+INFO  @ 18 Nov 2024 17:32:07: [760 MB]  158000000 reads parsed 
+INFO  @ 18 Nov 2024 17:32:21: [760 MB]  159000000 reads parsed 
+INFO  @ 18 Nov 2024 17:32:25: [760 MB]  160000000 reads parsed 
+INFO  @ 18 Nov 2024 17:32:30: [760 MB]  161000000 reads parsed 
+INFO  @ 18 Nov 2024 17:32:34: [760 MB]  162000000 reads parsed 
+INFO  @ 18 Nov 2024 17:32:39: [760 MB]  163000000 reads parsed 
+INFO  @ 18 Nov 2024 17:32:43: [760 MB]  164000000 reads parsed 
+INFO  @ 18 Nov 2024 17:32:48: [760 MB]  165000000 reads parsed 
+INFO  @ 18 Nov 2024 17:32:52: [760 MB]  166000000 reads parsed 
+INFO  @ 18 Nov 2024 17:32:56: [760 MB]  167000000 reads parsed 
+INFO  @ 18 Nov 2024 17:33:00: [760 MB]  168000000 reads parsed 
+INFO  @ 18 Nov 2024 17:33:04: [760 MB]  169000000 reads parsed 
+INFO  @ 18 Nov 2024 17:33:10: [760 MB]  170000000 reads parsed 
+INFO  @ 18 Nov 2024 17:33:15: [760 MB]  171000000 reads parsed 
+INFO  @ 18 Nov 2024 17:33:20: [760 MB]  172000000 reads parsed 
+INFO  @ 18 Nov 2024 17:33:27: [760 MB]  173000000 reads parsed 
+INFO  @ 18 Nov 2024 17:33:34: [760 MB]  174000000 reads parsed 
+INFO  @ 18 Nov 2024 17:33:39: [760 MB]  175000000 reads parsed 
+INFO  @ 18 Nov 2024 17:33:43: [760 MB]  176000000 reads parsed 
+INFO  @ 18 Nov 2024 17:33:48: [760 MB]  177000000 reads parsed 
+INFO  @ 18 Nov 2024 17:33:53: [761 MB]  178000000 reads parsed 
+INFO  @ 18 Nov 2024 17:33:57: [782 MB]  179000000 reads parsed 
+INFO  @ 18 Nov 2024 17:34:03: [782 MB]  180000000 reads parsed 
+INFO  @ 18 Nov 2024 17:34:07: [782 MB]  181000000 reads parsed 
+INFO  @ 18 Nov 2024 17:34:11: [782 MB]  182000000 reads parsed 
+INFO  @ 18 Nov 2024 17:34:17: [782 MB]  183000000 reads parsed 
+INFO  @ 18 Nov 2024 17:34:21: [782 MB]  184000000 reads parsed 
+INFO  @ 18 Nov 2024 17:34:27: [782 MB]  185000000 reads parsed 
+INFO  @ 18 Nov 2024 17:34:33: [782 MB]  186000000 reads parsed 
+INFO  @ 18 Nov 2024 17:34:42: [786 MB]  187000000 reads parsed 
+INFO  @ 18 Nov 2024 17:34:48: [787 MB]  188000000 reads parsed 
+INFO  @ 18 Nov 2024 17:34:54: [803 MB]  189000000 reads parsed 
+INFO  @ 18 Nov 2024 17:34:58: [809 MB]  190000000 reads parsed 
+INFO  @ 18 Nov 2024 17:35:03: [813 MB]  191000000 reads parsed 
+INFO  @ 18 Nov 2024 17:35:08: [817 MB]  192000000 reads parsed 
+INFO  @ 18 Nov 2024 17:35:12: [819 MB]  193000000 reads parsed 
+INFO  @ 18 Nov 2024 17:35:17: [822 MB]  194000000 reads parsed 
+INFO  @ 18 Nov 2024 17:35:24: [842 MB]  195000000 reads parsed 
+INFO  @ 18 Nov 2024 17:35:30: [842 MB]  196000000 reads parsed 
+INFO  @ 18 Nov 2024 17:35:36: [842 MB]  197000000 reads parsed 
+INFO  @ 18 Nov 2024 17:35:44: [842 MB]  198000000 reads parsed 
+INFO  @ 18 Nov 2024 17:35:49: [842 MB]  199000000 reads parsed 
+INFO  @ 18 Nov 2024 17:35:54: [842 MB]  200000000 reads parsed 
+INFO  @ 18 Nov 2024 17:36:00: [842 MB]  201000000 reads parsed 
+INFO  @ 18 Nov 2024 17:36:05: [845 MB]  202000000 reads parsed 
+INFO  @ 18 Nov 2024 17:36:10: [847 MB]  203000000 reads parsed 
+INFO  @ 18 Nov 2024 17:36:15: [850 MB]  204000000 reads parsed 
+INFO  @ 18 Nov 2024 17:36:20: [865 MB]  205000000 reads parsed 
+INFO  @ 18 Nov 2024 17:36:27: [871 MB]  206000000 reads parsed 
+INFO  @ 18 Nov 2024 17:36:31: [875 MB]  207000000 reads parsed 
+INFO  @ 18 Nov 2024 17:36:35: [879 MB]  208000000 reads parsed 
+INFO  @ 18 Nov 2024 17:36:39: [881 MB]  209000000 reads parsed 
+INFO  @ 18 Nov 2024 17:36:43: [884 MB]  210000000 reads parsed 
+INFO  @ 18 Nov 2024 17:36:47: [905 MB]  211000000 reads parsed 
+INFO  @ 18 Nov 2024 17:36:52: [905 MB]  212000000 reads parsed 
+INFO  @ 18 Nov 2024 17:36:56: [905 MB]  213000000 reads parsed 
+INFO  @ 18 Nov 2024 17:37:01: [905 MB]  214000000 reads parsed 
+INFO  @ 18 Nov 2024 17:37:05: [905 MB]  215000000 reads parsed 
+INFO  @ 18 Nov 2024 17:37:09: [905 MB]  216000000 reads parsed 
+INFO  @ 18 Nov 2024 17:37:13: [905 MB]  217000000 reads parsed 
+INFO  @ 18 Nov 2024 17:37:17: [905 MB]  218000000 reads parsed 
+INFO  @ 18 Nov 2024 17:37:21: [907 MB]  219000000 reads parsed 
+INFO  @ 18 Nov 2024 17:37:25: [910 MB]  220000000 reads parsed 
+INFO  @ 18 Nov 2024 17:37:31: [914 MB]  221000000 reads parsed 
+INFO  @ 18 Nov 2024 17:37:36: [921 MB]  222000000 reads parsed 
+INFO  @ 18 Nov 2024 17:37:40: [924 MB]  223000000 reads parsed 
+INFO  @ 18 Nov 2024 17:37:45: [925 MB]  224000000 reads parsed 
+INFO  @ 18 Nov 2024 17:37:50: [940 MB]  225000000 reads parsed 
+INFO  @ 18 Nov 2024 17:37:55: [943 MB]  226000000 reads parsed 
+INFO  @ 18 Nov 2024 17:38:00: [943 MB]  227000000 reads parsed 
+INFO  @ 18 Nov 2024 17:38:07: [944 MB]  228000000 reads parsed 
+INFO  @ 18 Nov 2024 17:38:13: [946 MB]  229000000 reads parsed 
+INFO  @ 18 Nov 2024 17:38:17: [959 MB]  230000000 reads parsed 
+INFO  @ 18 Nov 2024 17:38:22: [962 MB]  231000000 reads parsed 
+INFO  @ 18 Nov 2024 17:38:26: [967 MB]  232000000 reads parsed 
+INFO  @ 18 Nov 2024 17:38:30: [970 MB]  233000000 reads parsed 
+INFO  @ 18 Nov 2024 17:38:35: [974 MB]  234000000 reads parsed 
+INFO  @ 18 Nov 2024 17:38:39: [976 MB]  235000000 reads parsed 
+INFO  @ 18 Nov 2024 17:38:43: [997 MB]  236000000 reads parsed 
+INFO  @ 18 Nov 2024 17:38:49: [997 MB]  237000000 reads parsed 
+INFO  @ 18 Nov 2024 17:38:57: [997 MB]  238000000 reads parsed 
+INFO  @ 18 Nov 2024 17:39:02: [997 MB]  239000000 reads parsed 
+INFO  @ 18 Nov 2024 17:39:08: [997 MB]  240000000 reads parsed 
+INFO  @ 18 Nov 2024 17:39:12: [1000 MB]  241000000 reads parsed 
+INFO  @ 18 Nov 2024 17:39:17: [1010 MB]  242000000 reads parsed 
+INFO  @ 18 Nov 2024 17:39:21: [1010 MB]  243000000 reads parsed 
+INFO  @ 18 Nov 2024 17:39:26: [1012 MB]  244000000 reads parsed 
+INFO  @ 18 Nov 2024 17:39:31: [1016 MB]  245000000 reads parsed 
+INFO  @ 18 Nov 2024 17:39:38: [1020 MB]  246000000 reads parsed 
+INFO  @ 18 Nov 2024 17:39:45: [1023 MB]  247000000 reads parsed 
+INFO  @ 18 Nov 2024 17:39:49: [1027 MB]  248000000 reads parsed 
+INFO  @ 18 Nov 2024 17:39:53: [1031 MB]  249000000 reads parsed 
+INFO  @ 18 Nov 2024 17:39:58: [1033 MB]  250000000 reads parsed 
+INFO  @ 18 Nov 2024 17:40:03: [1035 MB]  251000000 reads parsed 
+INFO  @ 18 Nov 2024 17:40:08: [1037 MB]  252000000 reads parsed 
+INFO  @ 18 Nov 2024 17:40:15: [1042 MB]  253000000 reads parsed 
+INFO  @ 18 Nov 2024 17:40:20: [1049 MB]  254000000 reads parsed 
+INFO  @ 18 Nov 2024 17:40:25: [1056 MB]  255000000 reads parsed 
+INFO  @ 18 Nov 2024 17:40:32: [1060 MB]  256000000 reads parsed 
+INFO  @ 18 Nov 2024 17:40:36: [1064 MB]  257000000 reads parsed 
+INFO  @ 18 Nov 2024 17:40:40: [1066 MB]  258000000 reads parsed 
+INFO  @ 18 Nov 2024 17:40:45: [1068 MB]  259000000 reads parsed 
+INFO  @ 18 Nov 2024 17:40:49: [1088 MB]  260000000 reads parsed 
+INFO  @ 18 Nov 2024 17:40:54: [1088 MB]  261000000 reads parsed 
+INFO  @ 18 Nov 2024 17:40:58: [1088 MB]  262000000 reads parsed 
+INFO  @ 18 Nov 2024 17:41:02: [1088 MB]  263000000 reads parsed 
+INFO  @ 18 Nov 2024 17:41:07: [1088 MB]  264000000 reads parsed 
+INFO  @ 18 Nov 2024 17:41:10: [1088 MB]  265000000 reads parsed 
+INFO  @ 18 Nov 2024 17:41:15: [1096 MB]  266000000 reads parsed 
+INFO  @ 18 Nov 2024 17:41:20: [1100 MB]  267000000 reads parsed 
+INFO  @ 18 Nov 2024 17:41:28: [1105 MB]  268000000 reads parsed 
+INFO  @ 18 Nov 2024 17:41:33: [1109 MB]  269000000 reads parsed 
+INFO  @ 18 Nov 2024 17:41:38: [1113 MB]  270000000 reads parsed 
+INFO  @ 18 Nov 2024 17:41:42: [1115 MB]  271000000 reads parsed 
+INFO  @ 18 Nov 2024 17:41:49: [1117 MB]  272000000 reads parsed 
+INFO  @ 18 Nov 2024 17:41:54: [1137 MB]  273000000 reads parsed 
+INFO  @ 18 Nov 2024 17:41:59: [1137 MB]  274000000 reads parsed 
+INFO  @ 18 Nov 2024 17:42:02: [1137 MB]  275000000 reads parsed 
+INFO  @ 18 Nov 2024 17:42:08: [1137 MB]  276000000 reads parsed 
+INFO  @ 18 Nov 2024 17:42:12: [1137 MB]  277000000 reads parsed 
+INFO  @ 18 Nov 2024 17:42:18: [1140 MB]  278000000 reads parsed 
+INFO  @ 18 Nov 2024 17:42:22: [1144 MB]  279000000 reads parsed 
+INFO  @ 18 Nov 2024 17:42:26: [1148 MB]  280000000 reads parsed 
+INFO  @ 18 Nov 2024 17:42:30: [1151 MB]  281000000 reads parsed 
+INFO  @ 18 Nov 2024 17:42:34: [1156 MB]  282000000 reads parsed 
+INFO  @ 18 Nov 2024 17:42:38: [1157 MB]  283000000 reads parsed 
+INFO  @ 18 Nov 2024 17:42:43: [1160 MB]  284000000 reads parsed 
+INFO  @ 18 Nov 2024 17:42:48: [1162 MB]  285000000 reads parsed 
+INFO  @ 18 Nov 2024 17:42:53: [1169 MB]  286000000 reads parsed 
+INFO  @ 18 Nov 2024 17:42:57: [1176 MB]  287000000 reads parsed 
+INFO  @ 18 Nov 2024 17:43:01: [1176 MB]  288000000 reads parsed 
+INFO  @ 18 Nov 2024 17:43:06: [1180 MB]  289000000 reads parsed 
+INFO  @ 18 Nov 2024 17:43:10: [1183 MB]  290000000 reads parsed 
+INFO  @ 18 Nov 2024 17:43:15: [1186 MB]  291000000 reads parsed 
+INFO  @ 18 Nov 2024 17:43:20: [1200 MB]  292000000 reads parsed 
+INFO  @ 18 Nov 2024 17:43:24: [1200 MB]  293000000 reads parsed 
+INFO  @ 18 Nov 2024 17:43:27: [1201 MB]  294000000 reads parsed 
+INFO  @ 18 Nov 2024 17:43:31: [1205 MB]  295000000 reads parsed 
+INFO  @ 18 Nov 2024 17:43:35: [1209 MB]  296000000 reads parsed 
+INFO  @ 18 Nov 2024 17:43:39: [1213 MB]  297000000 reads parsed 
+INFO  @ 18 Nov 2024 17:43:44: [1216 MB]  298000000 reads parsed 
+INFO  @ 18 Nov 2024 17:43:48: [1220 MB]  299000000 reads parsed 
+INFO  @ 18 Nov 2024 17:43:52: [1224 MB]  300000000 reads parsed 
+INFO  @ 18 Nov 2024 17:43:56: [1228 MB]  301000000 reads parsed 
+INFO  @ 18 Nov 2024 17:44:00: [1232 MB]  302000000 reads parsed 
+INFO  @ 18 Nov 2024 17:44:05: [1235 MB]  303000000 reads parsed 
+INFO  @ 18 Nov 2024 17:44:09: [1237 MB]  304000000 reads parsed 
+INFO  @ 18 Nov 2024 17:44:13: [1243 MB]  305000000 reads parsed 
+INFO  @ 18 Nov 2024 17:44:17: [1245 MB]  306000000 reads parsed 
+INFO  @ 18 Nov 2024 17:44:21: [1247 MB]  307000000 reads parsed 
+INFO  @ 18 Nov 2024 17:44:27: [1264 MB]  308000000 reads parsed 
+INFO  @ 18 Nov 2024 17:44:32: [1264 MB]  309000000 reads parsed 
+INFO  @ 18 Nov 2024 17:44:36: [1264 MB]  310000000 reads parsed 
+INFO  @ 18 Nov 2024 17:44:39: [1282 MB]  311000000 reads parsed 
+INFO  @ 18 Nov 2024 17:44:44: [1284 MB]  312000000 reads parsed 
+INFO  @ 18 Nov 2024 17:44:50: [1286 MB]  313000000 reads parsed 
+INFO  @ 18 Nov 2024 17:45:04: [1288 MB]  314000000 reads parsed 
+INFO  @ 18 Nov 2024 17:45:19: [1288 MB]  315000000 reads parsed 
+INFO  @ 18 Nov 2024 17:45:35: [1290 MB]  316000000 reads parsed 
+INFO  @ 18 Nov 2024 17:45:51: [1293 MB]  317000000 reads parsed 
+INFO  @ 18 Nov 2024 17:46:03: [1299 MB]  318000000 reads parsed 
+INFO  @ 18 Nov 2024 17:46:09: [1300 MB]  319000000 reads parsed 
+INFO  @ 18 Nov 2024 17:46:13: [1304 MB]  320000000 reads parsed 
+INFO  @ 18 Nov 2024 17:46:17: [1320 MB]  321000000 reads parsed 
+INFO  @ 18 Nov 2024 17:46:21: [1322 MB]  322000000 reads parsed 
+INFO  @ 18 Nov 2024 17:46:28: [1323 MB]  323000000 reads parsed 
+INFO  @ 18 Nov 2024 17:46:33: [1325 MB]  324000000 reads parsed 
+INFO  @ 18 Nov 2024 17:46:37: [1326 MB]  325000000 reads parsed 
+INFO  @ 18 Nov 2024 17:46:43: [1328 MB]  326000000 reads parsed 
+INFO  @ 18 Nov 2024 17:46:47: [1337 MB]  327000000 reads parsed 
+INFO  @ 18 Nov 2024 17:46:52: [1337 MB]  328000000 reads parsed 
+INFO  @ 18 Nov 2024 17:46:56: [1337 MB]  329000000 reads parsed 
+INFO  @ 18 Nov 2024 17:47:01: [1339 MB]  330000000 reads parsed 
+INFO  @ 18 Nov 2024 17:47:06: [1347 MB]  331000000 reads parsed 
+INFO  @ 18 Nov 2024 17:47:12: [1362 MB]  332000000 reads parsed 
+INFO  @ 18 Nov 2024 17:47:19: [1362 MB]  333000000 reads parsed 
+INFO  @ 18 Nov 2024 17:47:24: [1366 MB]  334000000 reads parsed 
+INFO  @ 18 Nov 2024 17:47:31: [1381 MB]  335000000 reads parsed 
+INFO  @ 18 Nov 2024 17:47:36: [1383 MB]  336000000 reads parsed 
+INFO  @ 18 Nov 2024 17:47:46: [1384 MB]  337000000 reads parsed 
+INFO  @ 18 Nov 2024 17:47:46: [1384 MB] 337019514 reads have been read. 
+INFO  @ 18 Nov 2024 17:47:48: [1384 MB] #1 tag size is determined as 92 bps 
+INFO  @ 18 Nov 2024 17:47:48: [1384 MB] #1 tag size = 92.0 
+INFO  @ 18 Nov 2024 17:47:48: [1384 MB] #1  total tags in treatment: 337019514 
+INFO  @ 18 Nov 2024 17:47:48: [1384 MB] #1 finished! 
+INFO  @ 18 Nov 2024 17:47:48: [1384 MB] #2 Build Peak Model... 
+INFO  @ 18 Nov 2024 17:47:48: [1384 MB] #2 Skipped... 
+INFO  @ 18 Nov 2024 17:47:48: [1384 MB] #2 Use 200 as fragment length 
+INFO  @ 18 Nov 2024 17:47:48: [1384 MB] #2 Sequencing ends will be shifted towards 5' by 100 bp(s) 
+INFO  @ 18 Nov 2024 17:47:48: [1384 MB] #3 Call peaks... 
+INFO  @ 18 Nov 2024 17:47:48: [1384 MB] # local lambda is disabled! 
+INFO  @ 18 Nov 2024 17:47:48: [1384 MB] #3 !!!! DYNAMIC LAMBDA IS DISABLED !!!! 
+INFO  @ 18 Nov 2024 17:47:48: [1384 MB] #3 Going to call summits inside each peak ... 
+INFO  @ 18 Nov 2024 17:47:48: [1384 MB] #3 Pre-compute pvalue-qvalue table... 
+INFO  @ 18 Nov 2024 17:50:34: [2913 MB] #3 Call peaks for each chromosome... 
+INFO  @ 18 Nov 2024 17:55:25: [2913 MB] #4 Write output xls file... /pollard/data/projects/aseveritt/encode_snatacseq/03_peakcalls/A549_peaks.xls 
+INFO  @ 18 Nov 2024 17:55:27: [2913 MB] #4 Write peak in narrowPeak format file... /pollard/data/projects/aseveritt/encode_snatacseq/03_peakcalls/A549_peaks.narrowPeak 
+INFO  @ 18 Nov 2024 17:55:29: [2913 MB] #4 Write summits bed file... /pollard/data/projects/aseveritt/encode_snatacseq/03_peakcalls/A549_summits.bed 
+INFO  @ 18 Nov 2024 17:55:29: [2913 MB] Done! 
+======================================================================================================================================================
+================================================================================================================================================================
+=============================================================================================
+====================================================================================================================================================
+=================================================================================================================================================================================================================================
+==
+=============================================================================================================================================================================================================================================
+=================
+====================
+=====
+==============================================
+===============
+================================================================================
+============================================================================================================================
+==========================================================================================
+========================
+=======================================================================================================================================================
+==========================
+======
+===================================================================================================================
+=================
+=========================
+==============================================================================================================================
+==================
+514194 total summits to begin with
+217119 peaks overlaped no other peak
+69218 peaks overlaped one other peak -- removing 69218 peaks
+the remaining peaks were summarized into 65449 peaks
+Ultimately, there are 351786 peaks left
+==============================================================
+job_number:                 787094
+exec_file:                  job_scripts/787094
+submission_time:            Mon Nov 18 17:18:24 2024
+owner:                      aseveritt
+uid:                        61365
+group:                      pollard
+gid:                        22000
+sge_o_home:                 /wynton/home/pollard/aseveritt
+sge_o_log_name:             aseveritt
+sge_o_path:                 /wynton/home/pollard/aseveritt/.conda/envs/downsampling/bin:/wynton/home/cbi/shared/software/CBI/miniforge3-24.9.2-0/condabin:/wynton/home/cbi/shared/software/CBI/miniforge3-24.9.2-0/bin:/opt/sge/bin:/opt/sge/bin/lx-amd64:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/wynton/home/pollard/aseveritt/.local/bin:/wynton/home/pollard/aseveritt/bin
+sge_o_shell:                /bin/bash
+sge_o_workdir:              /pollard/data/projects/aseveritt/encode_snatacseq/03_peakcalls/qsubs
+sge_o_host:                 dev1
+account:                    sge
+cwd:                        /pollard/data/projects/aseveritt/encode_snatacseq/03_peakcalls//qsubs/
+merge:                      y
+hard resource_list:         mem_free=10G,scratch=25G,h_rt=86400,x86-64-v=4
+mail_list:                  aseveritt@dev1.wynton.ucsf.edu
+notify:                     FALSE
+job_name:                   A549.qsub.sh
+jobshare:                   0
+hard_queue_list:            !*gpu.q
+shell_list:                 NONE:/bin/bash
+env_list:                   TERM=NONE
+script_file:                A549.qsub.sh
+parallel environment:  smp range: 10
+project:                    pollardlab
+binding:                    NONE
+job_type:                   NONE
+usage         1:            cpu=00:34:37, mem=1918.04180 GB s, io=45.66186 GB, vmem=2.281G, maxvmem=3.064G
+binding       1:            NONE
+scheduling info:            (Collecting of scheduler job information is turned off)

@@ -1,0 +1,186 @@
+INFO  @ 18 Nov 2024 17:19:31: [757 MB] 
+# Command line: callpeak -g 2.9e+09 --name CALU3 --treatment /pollard/data/projects/aseveritt/encode_snatacseq/03_filtered_bams//CALU3-cellFilt.bam --outdir /pollard/data/projects/aseveritt/encode_snatacseq/03_peakcalls/ --call-summits --keep-dup all --nomodel --nolambda --shift -100 --extsize 200 -q 0.05
+# ARGUMENTS LIST:
+# name = CALU3
+# format = AUTO
+# ChIP-seq file = ['/pollard/data/projects/aseveritt/encode_snatacseq/03_filtered_bams//CALU3-cellFilt.bam']
+# control file = None
+# effective genome size = 2.90e+09
+# band width = 300
+# model fold = [5, 50]
+# qvalue cutoff = 5.00e-02
+# The maximum gap between significant sites is assigned as the read length/tag size.
+# The minimum length of peaks is assigned as the predicted fragment length "d".
+# Larger dataset will be scaled towards smaller dataset.
+# Range for calculating regional lambda is: 10000 bps
+# Broad region calling is off
+# Paired-End mode is off
+# Searching for subpeak summits is on
+ 
+INFO  @ 18 Nov 2024 17:19:31: [757 MB] #1 read tag files... 
+INFO  @ 18 Nov 2024 17:19:31: [757 MB] #1 read treatment tags... 
+INFO  @ 18 Nov 2024 17:19:31: [757 MB] Detected format is: BAM 
+INFO  @ 18 Nov 2024 17:19:31: [757 MB] * Input file is gzipped. 
+INFO  @ 18 Nov 2024 17:19:39: [757 MB]  1000000 reads parsed 
+INFO  @ 18 Nov 2024 17:19:42: [757 MB]  2000000 reads parsed 
+INFO  @ 18 Nov 2024 17:19:46: [757 MB]  3000000 reads parsed 
+INFO  @ 18 Nov 2024 17:19:50: [757 MB]  4000000 reads parsed 
+INFO  @ 18 Nov 2024 17:19:54: [757 MB]  5000000 reads parsed 
+INFO  @ 18 Nov 2024 17:19:57: [757 MB]  6000000 reads parsed 
+INFO  @ 18 Nov 2024 17:20:01: [757 MB]  7000000 reads parsed 
+INFO  @ 18 Nov 2024 17:20:04: [757 MB]  8000000 reads parsed 
+INFO  @ 18 Nov 2024 17:20:07: [757 MB]  9000000 reads parsed 
+INFO  @ 18 Nov 2024 17:20:10: [757 MB]  10000000 reads parsed 
+INFO  @ 18 Nov 2024 17:20:15: [757 MB]  11000000 reads parsed 
+INFO  @ 18 Nov 2024 17:20:18: [757 MB]  12000000 reads parsed 
+INFO  @ 18 Nov 2024 17:20:22: [757 MB]  13000000 reads parsed 
+INFO  @ 18 Nov 2024 17:20:25: [757 MB]  14000000 reads parsed 
+INFO  @ 18 Nov 2024 17:20:28: [757 MB]  15000000 reads parsed 
+INFO  @ 18 Nov 2024 17:20:32: [757 MB]  16000000 reads parsed 
+INFO  @ 18 Nov 2024 17:20:36: [757 MB]  17000000 reads parsed 
+INFO  @ 18 Nov 2024 17:20:40: [757 MB]  18000000 reads parsed 
+INFO  @ 18 Nov 2024 17:20:43: [757 MB]  19000000 reads parsed 
+INFO  @ 18 Nov 2024 17:20:46: [757 MB]  20000000 reads parsed 
+INFO  @ 18 Nov 2024 17:20:49: [757 MB]  21000000 reads parsed 
+INFO  @ 18 Nov 2024 17:20:53: [757 MB]  22000000 reads parsed 
+INFO  @ 18 Nov 2024 17:20:57: [757 MB]  23000000 reads parsed 
+INFO  @ 18 Nov 2024 17:21:01: [757 MB]  24000000 reads parsed 
+INFO  @ 18 Nov 2024 17:21:05: [757 MB]  25000000 reads parsed 
+INFO  @ 18 Nov 2024 17:21:12: [757 MB]  26000000 reads parsed 
+INFO  @ 18 Nov 2024 17:21:18: [757 MB]  27000000 reads parsed 
+INFO  @ 18 Nov 2024 17:21:21: [757 MB]  28000000 reads parsed 
+INFO  @ 18 Nov 2024 17:21:24: [757 MB]  29000000 reads parsed 
+INFO  @ 18 Nov 2024 17:21:27: [757 MB]  30000000 reads parsed 
+INFO  @ 18 Nov 2024 17:21:30: [757 MB]  31000000 reads parsed 
+INFO  @ 18 Nov 2024 17:21:34: [757 MB]  32000000 reads parsed 
+INFO  @ 18 Nov 2024 17:21:37: [757 MB]  33000000 reads parsed 
+INFO  @ 18 Nov 2024 17:21:40: [757 MB]  34000000 reads parsed 
+INFO  @ 18 Nov 2024 17:21:43: [757 MB]  35000000 reads parsed 
+INFO  @ 18 Nov 2024 17:21:47: [757 MB]  36000000 reads parsed 
+INFO  @ 18 Nov 2024 17:21:51: [757 MB]  37000000 reads parsed 
+INFO  @ 18 Nov 2024 17:21:54: [757 MB]  38000000 reads parsed 
+INFO  @ 18 Nov 2024 17:21:58: [757 MB]  39000000 reads parsed 
+INFO  @ 18 Nov 2024 17:22:02: [757 MB]  40000000 reads parsed 
+INFO  @ 18 Nov 2024 17:22:05: [757 MB]  41000000 reads parsed 
+INFO  @ 18 Nov 2024 17:22:08: [757 MB]  42000000 reads parsed 
+INFO  @ 18 Nov 2024 17:22:13: [757 MB]  43000000 reads parsed 
+INFO  @ 18 Nov 2024 17:22:17: [757 MB]  44000000 reads parsed 
+INFO  @ 18 Nov 2024 17:22:20: [757 MB]  45000000 reads parsed 
+INFO  @ 18 Nov 2024 17:22:24: [757 MB]  46000000 reads parsed 
+INFO  @ 18 Nov 2024 17:22:27: [757 MB]  47000000 reads parsed 
+INFO  @ 18 Nov 2024 17:22:32: [757 MB]  48000000 reads parsed 
+INFO  @ 18 Nov 2024 17:22:36: [757 MB]  49000000 reads parsed 
+INFO  @ 18 Nov 2024 17:22:39: [757 MB]  50000000 reads parsed 
+INFO  @ 18 Nov 2024 17:22:43: [757 MB]  51000000 reads parsed 
+INFO  @ 18 Nov 2024 17:22:47: [757 MB]  52000000 reads parsed 
+INFO  @ 18 Nov 2024 17:22:50: [757 MB]  53000000 reads parsed 
+INFO  @ 18 Nov 2024 17:22:53: [757 MB]  54000000 reads parsed 
+INFO  @ 18 Nov 2024 17:22:56: [757 MB]  55000000 reads parsed 
+INFO  @ 18 Nov 2024 17:23:00: [757 MB]  56000000 reads parsed 
+INFO  @ 18 Nov 2024 17:23:04: [757 MB]  57000000 reads parsed 
+INFO  @ 18 Nov 2024 17:23:08: [757 MB]  58000000 reads parsed 
+INFO  @ 18 Nov 2024 17:23:11: [757 MB]  59000000 reads parsed 
+INFO  @ 18 Nov 2024 17:23:14: [757 MB]  60000000 reads parsed 
+INFO  @ 18 Nov 2024 17:23:18: [757 MB]  61000000 reads parsed 
+INFO  @ 18 Nov 2024 17:23:21: [757 MB]  62000000 reads parsed 
+INFO  @ 18 Nov 2024 17:23:25: [757 MB]  63000000 reads parsed 
+INFO  @ 18 Nov 2024 17:23:29: [757 MB]  64000000 reads parsed 
+INFO  @ 18 Nov 2024 17:23:32: [757 MB]  65000000 reads parsed 
+INFO  @ 18 Nov 2024 17:23:36: [757 MB]  66000000 reads parsed 
+INFO  @ 18 Nov 2024 17:23:39: [757 MB]  67000000 reads parsed 
+INFO  @ 18 Nov 2024 17:23:42: [757 MB]  68000000 reads parsed 
+INFO  @ 18 Nov 2024 17:23:46: [757 MB]  69000000 reads parsed 
+INFO  @ 18 Nov 2024 17:23:49: [757 MB]  70000000 reads parsed 
+INFO  @ 18 Nov 2024 17:23:52: [757 MB]  71000000 reads parsed 
+INFO  @ 18 Nov 2024 17:23:56: [757 MB]  72000000 reads parsed 
+INFO  @ 18 Nov 2024 17:23:59: [757 MB]  73000000 reads parsed 
+INFO  @ 18 Nov 2024 17:24:02: [757 MB]  74000000 reads parsed 
+INFO  @ 18 Nov 2024 17:24:06: [757 MB]  75000000 reads parsed 
+INFO  @ 18 Nov 2024 17:24:09: [757 MB]  76000000 reads parsed 
+INFO  @ 18 Nov 2024 17:24:15: [757 MB]  77000000 reads parsed 
+INFO  @ 18 Nov 2024 17:24:23: [757 MB]  78000000 reads parsed 
+INFO  @ 18 Nov 2024 17:24:26: [757 MB]  79000000 reads parsed 
+INFO  @ 18 Nov 2024 17:24:30: [757 MB]  80000000 reads parsed 
+INFO  @ 18 Nov 2024 17:24:33: [757 MB]  81000000 reads parsed 
+INFO  @ 18 Nov 2024 17:24:38: [757 MB]  82000000 reads parsed 
+INFO  @ 18 Nov 2024 17:24:41: [757 MB] 82399699 reads have been read. 
+INFO  @ 18 Nov 2024 17:24:41: [757 MB] #1 tag size is determined as 49 bps 
+INFO  @ 18 Nov 2024 17:24:41: [757 MB] #1 tag size = 49.0 
+INFO  @ 18 Nov 2024 17:24:41: [757 MB] #1  total tags in treatment: 82399699 
+INFO  @ 18 Nov 2024 17:24:41: [757 MB] #1 finished! 
+INFO  @ 18 Nov 2024 17:24:41: [757 MB] #2 Build Peak Model... 
+INFO  @ 18 Nov 2024 17:24:41: [757 MB] #2 Skipped... 
+INFO  @ 18 Nov 2024 17:24:41: [757 MB] #2 Use 200 as fragment length 
+INFO  @ 18 Nov 2024 17:24:41: [757 MB] #2 Sequencing ends will be shifted towards 5' by 100 bp(s) 
+INFO  @ 18 Nov 2024 17:24:41: [757 MB] #3 Call peaks... 
+INFO  @ 18 Nov 2024 17:24:41: [757 MB] # local lambda is disabled! 
+INFO  @ 18 Nov 2024 17:24:41: [757 MB] #3 !!!! DYNAMIC LAMBDA IS DISABLED !!!! 
+INFO  @ 18 Nov 2024 17:24:41: [757 MB] #3 Going to call summits inside each peak ... 
+INFO  @ 18 Nov 2024 17:24:41: [757 MB] #3 Pre-compute pvalue-qvalue table... 
+INFO  @ 18 Nov 2024 17:25:14: [769 MB] #3 Call peaks for each chromosome... 
+INFO  @ 18 Nov 2024 17:27:02: [769 MB] #4 Write output xls file... /pollard/data/projects/aseveritt/encode_snatacseq/03_peakcalls/CALU3_peaks.xls 
+INFO  @ 18 Nov 2024 17:27:04: [769 MB] #4 Write peak in narrowPeak format file... /pollard/data/projects/aseveritt/encode_snatacseq/03_peakcalls/CALU3_peaks.narrowPeak 
+INFO  @ 18 Nov 2024 17:27:04: [769 MB] #4 Write summits bed file... /pollard/data/projects/aseveritt/encode_snatacseq/03_peakcalls/CALU3_summits.bed 
+INFO  @ 18 Nov 2024 17:27:05: [769 MB] Done! 
+=================================================================================================================================================================================================================================
+======================================================================================================================================
+=========================
+======================================================================================================================================================================================================================================================================================================================================================
+=======
+=========
+=====================================
+========================================================================
+======================================================================================================================
+=============================================================================================================================================================================================================
+=========================================================================================================
+=========================
+=======================================================================================
+==================================
+==============================================================================================
+========
+=
+================================================================
+===
+======================
+===================================================================================================================================================================================================
+==
+=====================================================
+=====================================================
+351862 total summits to begin with
+191009 peaks overlaped no other peak
+45215 peaks overlaped one other peak -- removing 45215 peaks
+the remaining peaks were summarized into 28846 peaks
+Ultimately, there are 265070 peaks left
+==============================================================
+job_number:                 787095
+exec_file:                  job_scripts/787095
+submission_time:            Mon Nov 18 17:18:26 2024
+owner:                      aseveritt
+uid:                        61365
+group:                      pollard
+gid:                        22000
+sge_o_home:                 /wynton/home/pollard/aseveritt
+sge_o_log_name:             aseveritt
+sge_o_path:                 /wynton/home/pollard/aseveritt/.conda/envs/downsampling/bin:/wynton/home/cbi/shared/software/CBI/miniforge3-24.9.2-0/condabin:/wynton/home/cbi/shared/software/CBI/miniforge3-24.9.2-0/bin:/opt/sge/bin:/opt/sge/bin/lx-amd64:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/wynton/home/pollard/aseveritt/.local/bin:/wynton/home/pollard/aseveritt/bin
+sge_o_shell:                /bin/bash
+sge_o_workdir:              /pollard/data/projects/aseveritt/encode_snatacseq/03_peakcalls/qsubs
+sge_o_host:                 dev1
+account:                    sge
+cwd:                        /pollard/data/projects/aseveritt/encode_snatacseq/03_peakcalls//qsubs/
+merge:                      y
+hard resource_list:         mem_free=10G,scratch=25G,h_rt=86400,x86-64-v=4
+mail_list:                  aseveritt@dev1.wynton.ucsf.edu
+notify:                     FALSE
+job_name:                   CALU3.qsub.sh
+jobshare:                   0
+hard_queue_list:            !*gpu.q
+shell_list:                 NONE:/bin/bash
+env_list:                   TERM=NONE
+script_file:                CALU3.qsub.sh
+parallel environment:  smp range: 10
+project:                    pollardlab
+binding:                    NONE
+job_type:                   NONE
+usage         1:            cpu=00:06:53, mem=126.49403 GB s, io=9.33970 GB, vmem=1.294G, maxvmem=1.399G
+binding       1:            NONE
+scheduling info:            (Collecting of scheduler job information is turned off)
