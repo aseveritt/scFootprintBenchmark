@@ -21,25 +21,27 @@ The structure of the repository:
 
 
 
-```text
-.
-├── directory1
-│   ├── file1.md
-│   └── file2.txt
-├── directory2
-│   ├── subdirectory
-│   │   └── file3.js
-│   └── file4.html
-└── README.md
-```
+- **scripts/**
+  - `run.sh` – *Runs the main pipeline*
+  - `parser.py` – *Processes input data*
+- **data/**
+  - `example.csv` – *Sample dataset for testing*
+- `README.md` – **Project overview and usage**
+
+- **Project Structure**
+  - ├── **scripts/**
+  - │   ├── `run.sh` – *Runs the main pipeline*
+  - │   └── `parser.py` – *Processes input data*
+  - ├── **data/**
+  - │   └── `example.csv` – *Sample dataset for testing*
+  - └── `README.md` – **Project overview and usage**
 
 ```
-project
+scFootprintBenchmark
 │   README.md
-│   file001.txt    
 │
-└───folder1
-│   │   file011.txt
+└───00_unfiltered_bams/
+│   │   00_unfiltered_bams.sh 
 │   │   file012.txt
 │   │
 │   └───subfolder1
@@ -55,9 +57,9 @@ project
 
 ```
 scFootprintBenchmark
-├── 00_unfiltered_bams/
+└───00_unfiltered_bams/
 │   ├── file1.md
-├── 01_sinto/
+└───01_sinto/
 │   ├── subdirectory
 │   │   └── file3.js
 │   └── file4.html
