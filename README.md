@@ -6,6 +6,20 @@ Transcription factors (TFs) have millions of potential binding sites across the 
 
 ---------------
 The structure of the repository:
+| Directory             | Description                              |
+| --------------------- | ---------------------------------------- |
+| `00_unfiltered_bams/` | Source relevant ENCODE snATAC datasets |
+| `01_sinto/`           | Create fragment files; extract retained read names |
+| `02_arrows/`          | In preparation for ArchR, create arrow files for each BAM |
+| `03_archr/`           | Store the ArchR project itself  |
+| `03_filtered_bams/`   | Filter BAMs to include proper cell barcodes and reads |
+| `03_peakcalls/`       | Call Peak Coordinates for all cell-line BAMs |
+| `03_scripts`          | Scripts that are used in all the 03_* directories |
+| `04_downsampling/`    | Call Peak Coordinates for all cell-line BAMs |
+
+The structure of the repository:
+
+
 
 ```text
 .
