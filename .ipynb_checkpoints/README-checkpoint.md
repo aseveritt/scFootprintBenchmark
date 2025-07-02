@@ -6,6 +6,39 @@ Transcription factors (TFs) have millions of potential binding sites across the 
 
 ---------------
 The structure of the repository:
+
+```text
+.
+├── directory1
+│   ├── file1.md
+│   └── file2.txt
+├── directory2
+│   ├── subdirectory
+│   │   └── file3.js
+│   └── file4.html
+└── README.md
+
+
+```
+project
+│   README.md
+│   file001.txt    
+│
+└───folder1
+│   │   file011.txt
+│   │   file012.txt
+│   │
+│   └───subfolder1
+│       │   file111.txt
+│       │   file112.txt
+│       │   ...
+│   
+└───folder2
+    │   file021.txt
+    │   file022.txt
+```
+
+
 .
 ├── 00_unfiltered_bams/
 │   ├── file1.md
