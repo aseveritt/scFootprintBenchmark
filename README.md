@@ -17,62 +17,36 @@ The structure of the repository:
 | `03_scripts`          | Scripts that are used in all the 03_* directories |
 | `04_downsampling/`    | Call Peak Coordinates for all cell-line BAMs |
 
-The structure of the repository:
-
-
-
-- **scripts/**
-  - `run.sh` – *Runs the main pipeline*
-  - `parser.py` – *Processes input data*
-- **data/**
-  - `example.csv` – *Sample dataset for testing*
-- `README.md` – **Project overview and usage**
-
-- **Project Structure**
-  - ├── **scripts/**
-  - │   ├── `run.sh` – *Runs the main pipeline*
-  - │   └── `parser.py` – *Processes input data*
-  - ├── **data/**
-  - │   └── `example.csv` – *Sample dataset for testing*
-  - └── `README.md` – **Project overview and usage**
-
 ```
 scFootprintBenchmark
 │   README.md
 │
-└───00_unfiltered_bams/
-│   │   00_unfiltered_bams.sh 
-│   │   file012.txt
-│   │
-│   └───subfolder1
-│       │   file111.txt
-│       │   file112.txt
-│       │   ...
+└─── 00_unfiltered_bams/
+│   │   00_unfiltered_bams.sh : wget commands to pull ENCODE links
 │   
-└───folder2
-    │   file021.txt
-    │   file022.txt
+└─── 01_sinto/
+│   │   01_sinto.sh : creates fragment.tsv.gz & outputs QNAMES
+│   │
+│   └─── sinto/ : the sinto project itself
+│       │   adflkj : in-house edits to output read QNAMES directly
+│ 
+└─── 02_arrows/
+│   │   02_arrows.R : Rscript to generate 24 arrow files
+│
+└─── 03_archr/
+│   │   03_archr.R : creates archR project, process cell lines together, quality filtering, outputs peak matrix for cell-similarity section. 
+│   │
+│   └─── ENCODE_snATAC/ : ArchR project-- not directly provided due to size limitations, but can be downloaded @ (~Gb)
+│
+└─── 03_filtered_bams/
+│   │   *.bam : not directly provided due to size limitations, but can be downloaded @ (~Gb)
+|
+└─── 03_peakcalls/ 
+│   │   *_500bp.exclusion.bed -- standardized cell line peak files 
+│   └─── logs/ -- stdout files with details
+|
+└─── 03_scripts/
+│   │
+│   └─── 
 ```
 
-
-```
-scFootprintBenchmark
-└───00_unfiltered_bams/
-│   ├── file1.md
-└───01_sinto/
-│   ├── subdirectory
-│   │   └── file3.js
-│   └── file4.html
-├── 02_arrows/
-│   ├── file1.md
-├── 03_archr/
-│   ├── file1.md
-├── 03_filtered_bams/
-│   ├── file1.md
-├── 03_peakcalls/
-│   ├── file1.md
-├── 03_scripts
-│   ├── file1.md
-└── README.md
-
-```
