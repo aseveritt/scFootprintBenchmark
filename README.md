@@ -17,7 +17,7 @@ The structure of the repository:
 │   │   └── file3.js
 │   └── file4.html
 └── README.md
-
+```
 
 ```
 project
@@ -39,7 +39,8 @@ project
 ```
 
 
-.
+```
+scFootprintBenchmark
 ├── 00_unfiltered_bams/
 │   ├── file1.md
 ├── 01_sinto/
@@ -58,3 +59,4 @@ project
 │   ├── file1.md
 └── README.md
 
+```
