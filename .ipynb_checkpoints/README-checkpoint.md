@@ -4,57 +4,61 @@
 ### Abstract
 Transcription factors (TFs) have millions of potential binding sites across the human genome, but only a fraction are bound in a given context. Genomic footprinting aims to identify context-specific binding sites by detecting patterns in open chromatin data. While powerful, these approaches face technical challenges, especially in single-cell applications. We developed a benchmarking framework for cell-type specific footprinting and used it to evaluate the consistency, reproducibility, and equivalency of three leading methods across data quality scenarios and as a function of cell-type similarity. Peak-level read coverage emerged as the strongest predictor of stable footprints. Motivated by limited reproducibility across tools, we built an ensemble model that improved concordance with ChIP-seq. To encourage broader adoption and development of footprinting, we provide practical guidelines for robust genomic footprinting in single-cell datasets and a roadmap for extracting deeper insights about how gene regulatory networks vary across cell types in complex tissues. 
 
+-- Citation TBD -- 
+
 ---------------
 The structure of the repository:
 
-```text
-.
-├── directory1
-│   ├── file1.md
-│   └── file2.txt
-├── directory2
-│   ├── subdirectory
-│   │   └── file3.js
-│   └── file4.html
-└── README.md
-
+| Directory             | Description                              |
+| --------------------- | ---------------------------------------- |
+| `00_unfiltered_bams/` | Source relevant ENCODE snATAC datasets |
+| `01_sinto/`           | Create fragment files; extract retained read names |
+| `02_arrows/`          | In preparation for ArchR, create arrow files for each BAM |
+| `03_archr/`           | Store the ArchR project itself  |
+| `03_filtered_bams/`   | Filter BAMs to include proper cell barcodes and reads |
+| `03_peakcalls/`       | Call Peak Coordinates for all cell-line BAMs |
+| `03_scripts`          | Scripts that are used in all the 03_* directories |
+| `04_downsampling/`    | Call Peak Coordinates for all cell-line BAMs |
 
 ```
-project
+scFootprintBenchmark
 │   README.md
-│   file001.txt    
 │
-└───folder1
-│   │   file011.txt
-│   │   file012.txt
+└─── 00_unfiltered_bams/
+│   │   00_unfiltered_bams.sh : wget commands to pull ENCODE links
+│
+│
+└─── 01_sinto/
+│   │   01_sinto.sh : creates fragment.tsv.gz & outputs read-QNAMES
 │   │
-│   └───subfolder1
-│       │   file111.txt
-│       │   file112.txt
-│       │   ...
-│   
-└───folder2
-    │   file021.txt
-    │   file022.txt
+│   └─── sinto.zip : sinto was installed via pip, and a few files were adapted by hand to allow for the QNAME direct output.
+|                    fragments.py, utils.py, cli.py, arguments.py are the only edited files
+|                    this zip file would naturally be located in /miniforge/envs/env_name/lib/python3.10/site-packages/sinto/
+│ 
+└─── 02_arrows/
+│   │   02_arrows.R : Rscript to generate 24 arrow files
+│   │   ArchR-createArrows*.log : log file with arrow creation info
+│   │   QualityControl.tar.gz : per-replicate quality control images from ArchR. 
+│
+│
+└─── 03_archr/
+│   │   03_archr.R : creates archR project, process cell lines together, and performs quality filtering. 
+│   │
+│   └─── ENCODE_snATAC.tar.gz : ArchR project-- not directly provided due to size limitations, but can be downloaded @ (~Gb)
+│
+│
+└─── 03_filtered_bams/
+│   │   03_filtered_bams.sh: filters bams to remove (1) reads removed by sinto prior to fragment creation (via samtools)
+|   |                                               (2) reads not from chr1-22, X, or Y (via samtools)
+|   |                                               (3) reads belonging to a cell barcode that was removed in ArchR (via sinto)
+│   │   *.bam : not directly provided due to size limitations, but can be downloaded @ (~Gb)
+|
+└─── 03_peakcalls/ 
+│   │   *_500bp.exclusion.bed -- standardized cell line peak files 
+│   └─── logs/ -- stdout files with details
+|
+└─── 03_scripts/
+│   │
+│   └─── 
 ```
-
-
-.
-├── 00_unfiltered_bams/
-│   ├── file1.md
-├── 01_sinto/
-│   ├── subdirectory
-│   │   └── file3.js
-│   └── file4.html
-├── 02_arrows/
-│   ├── file1.md
-├── 03_archr/
-│   ├── file1.md
-├── 03_filtered_bams/
-│   ├── file1.md
-├── 03_peakcalls/
-│   ├── file1.md
-├── 03_scripts
-│   ├── file1.md
-└── README.md
 

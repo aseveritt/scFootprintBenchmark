@@ -4,7 +4,7 @@ addArchRThreads(threads = 14)
 addArchRGenome("hg38")
 
 inputFiles <- paste0(
-                "/pollard/data/projects/aseveritt/encode_snatacseq/01_sinto/",
+                "../01_sinto/",
                 c("A549_rep1_fragments_sinto.tsv.gz", "A549_rep2_fragments_sinto.tsv.gz",
                   "CALU3_rep1_fragments_sinto.tsv.gz", "GM12878_rep1_fragments_sinto.tsv.gz", 
                   "GM12878_rep2_fragments_sinto.tsv.gz", "GM12878_rep3_fragments_sinto.tsv.gz",
@@ -18,7 +18,7 @@ inputFiles <- paste0(
                   "SKNSH_rep2_fragments_sinto.tsv.gz", "SKNSH_rep3_fragments_sinto.tsv.gz",
                   "SKNSH_rep4_fragments_sinto.tsv.gz")
     )
-#addArchRGenome("hg38")
+
 mynames <- c("A549_rep1", "A549_rep2", "CALU3_rep1",
 			 "GM12878_rep1", "GM12878_rep2","GM12878_rep3", 
              "HEPG2_rep1", "HEPG2_rep2", "HEPG2_rep3",
@@ -29,7 +29,7 @@ mynames <- c("A549_rep1", "A549_rep2", "CALU3_rep1",
              "OCILY7_rep1", "PC9_rep1",
              "SKNSH_rep1", "SKNSH_rep2", "SKNSH_rep3", "SKNSH_rep4")
 
-setwd("/pollard/data/projects/aseveritt/encode_snatacseq/02_arrows/")
+setwd("02_arrows/")
 ArrowFiles <- createArrowFiles(
   inputFiles = inputFiles,
   outputNames = mynames,
