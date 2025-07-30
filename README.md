@@ -53,7 +53,7 @@ scFootprintBenchmark
 |   |                                                (2) reads not mapping to chr1-22, X, or Y (via samtools)
 |   |                                                (3) reads associated with filtered-out cell barcodes in ArchR (via sinto)
 |   | 
-│   │   *.bam : (not included due to size; downloadable separately, 568G)
+│   │   *.bam : (not included due to size (568G). Available upon request.
 |
 │
 └─── 03_peakcalls/ 
@@ -73,30 +73,24 @@ scFootprintBenchmark
 |
 |
 └─── 04_downsampling/
+│   │   sampling_stats.csv   : seed values used in downsampling -- allows for identical recreation of dataset.
+
 │   └─── 00_celldicts/ : Location where all scBAMpler cell line dictionaries are stored. 
 │   └─── 00_cellsim/   : Location input files for the scBAMpler cell-similarity extension are stored. 
 │   └─── 01_original/  : Fragment files for 5 cell lines of interest (required for PRINT)
 │   └─── 02_cells/     : Location where all cell-downsampled files are stored.
 │   │   |                **Note**, the BAM and fragment files are no longer stored.
-│   │   |                Only the read-QNAMEs are, which can be used to regenerate BAMs using scBAmpler/samtools 
-│   │   └─── c1000/
-│   │   └─── c2500/
-│   │   └─── c5000/
-│   │   └─── c7500/
-│   │   └─── c10000/
-│   │   └─── c20000/
-│   │   └─── c30000/
-│   │   └─── c40000/
-│   │   └─── c50000/
+│   │   |                Only the read-QNAMEs are, which can be used to regenerate BAMs using scBAmpler/samtools.
+│   │   | 
+│   │   └─── HEPG2_c5000.sh           : example input SGE bash command to create triplicates
+│   │   └─── HEPG2_c5000.sh.o802527   : example output of SGE job
 │   │ 
 │   └─── 03_reads/
 │   │ 
 │   └─── 04_frip/
 │   │ 
-│   └─── 06_cellsim/
-│   │ 
-│   │   sampling_stats.csv : Summary information for all the data-quality downsampled datasets. 
-│   │   sampling_stats_cellsim.csv : Summary information for all the cell-homogeneity downsampled datasets. 
+│   └─── 05_cellsim/
+│   │   └─── similarity_summary_stats.csv
 |
 |
 └─── 05_scripts/
