@@ -21,6 +21,8 @@ The structure of the repository:
 | `04_downsampling/`    | Downsampled BAM locations |
 | `05_scripts/`         | Scripts used to perform footprinting |
 | `05_footprinting/`    | Raw footprinting output files |
+| `06_dataquality/`     | Analysis of effect of data quality downsampling on footprinting (consistency) |
+
 
 
 ```
@@ -33,53 +35,54 @@ scFootprintBenchmark
 │
 └─── 01_sinto/
 │   │   01_sinto.sh : creates fragment.tsv.gz and extracts read QNAMEs
-│   └── sinto.zip : customized version of sinto (installed via pip)
+│   └── sinto.zip   : customized version of sinto (installed via pip)
 │       └── Modified files: fragments.py, utils.py, cli.py, arguments.py
 │           Edits (denoted #AMANDA) enabled direct QNAME output during fragment creation.
 │           The modified package was originally located in: /miniforge/envs/downsampling/lib/python3.10/site-packages/sinto/
 │ 
 └─── 02_arrows/
-│   │   02_arrows.R : R script to generate 24 arrow files (via ArchR)
+│   │   02_arrows.R             : R script to generate 24 arrow files (via ArchR)
 │   │   ArchR-createArrows*.log : logs from arrow file generation
-│   │   QualityControl.tar.gz : per-replicate QC images from ArchR 
+│   │   QualityControl.tar.gz   : per-replicate QC images from ArchR 
 │
 │
 └─── 03_archr/
-│   │   03_archr.R : creates ArchR project, process cell lines together, and performs quality filtering
+│   │   03_archr.R            : creates ArchR project, process cell lines together, and performs quality filtering
 │   │
 │   └─── ENCODE_snATAC.tar.gz : ArchR project (downloadable via Zenodo)
 │
 │
 └─── 03_filtered_bams/
-│   │   03_filtered_bams.sh : filters BAMs to remove (1) low-quality reads filtered by sinto prior to fragment creation (via samtools)
+│   │   03_filtered_bams.sh  : filters BAMs to remove (1) low-quality reads filtered by sinto prior to fragment creation (via samtools)
 |   |                                                (2) reads not mapping to chr1-22, X, or Y (via samtools)
 |   |                                                (3) reads associated with filtered-out cell barcodes in ArchR (via sinto)
 |   | 
-│   │   *.bam : not included due to size (568G). Available upon request.
+│   │   *.bam                : not included due to size (568G). Available upon request.
 |
 │
 └─── 03_peakcalls/ 
-│   │   MACS_*.R : Rscript to: (1) call peaks from BAM file using macs3 (2) standardize regions to 500bp (3) perform iterative peak overlap (adotpted from ArchR)
-│   │              **NOTE** a user-friendly version is available at https://github.com/aseveritt/scBAMpler
-│   │   *_500bp.exclusion.bed.gz : standardized peak sets per cell line 
-│   │   Union_filt_500bp.exclusion.bed.gz : union of standardized peaks across cell lines, also processed via iterative overlap;
+│   │   MACS_*.R                           : Rscript to (1) call peaks from BAM file using macs3
+│   │                                                   (2) standardize regions to 500bp
+│   │                                                   (3) perform iterative peak overlap (adotpted from ArchR)
+│   │                                       **NOTE** a user-friendly version is available at https://github.com/aseveritt/scBAMpler
+│   │   *_500bp.exclusion.bed.gz           : standardized peak sets per cell line 
+│   │   Union_filt_500bp.exclusion.bed.gz  : union of standardized peaks across cell lines, also processed via iterative overlap;
 │   │                                       used in the cell-homogeneity and differential binding module analyses  
-│   │ 
-│   └─── qsubs/ : stdin/stdout logs and metadata from peak-calling job submissions
+│   └─── qsubs/                            : stdin/stdout logs and metadata from peak-calling job submissions
 |
 |
 └─── 04_scripts/
-│   │   scBAMpler_wrapper.ipynb : Script generates the SGE-qsub scripts for scBAMpler and join summary statistics into one file.
+│   │   scBAMpler_wrapper.ipynb       : Script generates the SGE-qsub scripts for scBAMpler and join summary statistics into one file.
 |
 |
 └─── 04_downsampling/
-│   │   sampling_stats.csv   : seed values used in downsampling -- **allows for identical recreation of dataset using scBAMpler**
+│   │   sampling_stats.csv            : seed values used in downsampling -- **allows for identical recreation of dataset using scBAMpler**
 │   │ 
-│   └─── 00_celldicts/ : Location where all scBAMpler cell line dictionaries are stored. 
-│   └─── 00_cellsim/   : Location input files for the scBAMpler cell-similarity extension are stored. 
-│   └─── 01_original/  : Full-depth BAM/Fragment files for 5 cell lines of interest -- available upon request
-│   └─── 02_cells/     : Location where all cell-downsampled files are stored.
-│   │   |                **Note**, the BAM and fragment files are no longer stored.
+│   └─── 00_celldicts/                : Location where all scBAMpler cell line dictionaries are stored. 
+│   └─── 00_cellsim/                  : Location input files for the scBAMpler cell-similarity extension are stored. 
+│   └─── 01_original/                 : Full-depth BAM/Fragment files for 5 cell lines of interest -- available upon request
+│   └─── 02_cells/                    : Location where all cell-downsampled files are stored.
+│   │   |                             **Note**, the BAM and fragment files are no longer stored.
 │   │   |
 │   │   |    *_qnames.txt             : read-QNAMES which allow for regeneration of BAMs/Fragments using scBAMpler
 │   │   |                               not included due to size (~50Gb) -- available upon request
@@ -88,16 +91,16 @@ scFootprintBenchmark
 │   │   |    HEPG2_c5000.sh           : example input SGE bash command to create triplicates
 │   │   |    HEPG2_c5000.sh.o802527   : example output of SGE job
 │   │ 
-│   └─── 03_reads/     : Location where all read-downsampled files are stored.
+│   └─── 03_reads/                    : Location where all read-downsampled files are stored.
 │   │   |    *_qnames.txt             : read-QNAMES; not included due to size (~50Gb) -- available upon request                            
 │   │   |    reads_sampling_stats.csv : info about read-downsampling dataset
 │   │ 
-│   └─── 04_frip/     : Location where all frip-downsampled files are stored.
+│   └─── 04_frip/                     : Location where all frip-downsampled files are stored.
 │   │   |    *_qnames.txt             : frip-QNAMES; not included due to size (~300Gb) -- available upon request                            
-│   │   |    frip_sampling_stats.csv : info about frip-downsampling dataset
+│   │   |    frip_sampling_stats.csv  : info about frip-downsampling dataset
 │   │ 
 │   └─── 05_cellsim/
-│   │   └─── similarity_summary_stats.csv
+│   │   |    similarity_summary_stats.csv
 |
 |
 └─── 05_scripts/
@@ -113,7 +116,10 @@ scFootprintBenchmark
 |   │    **NOTE** due to size, its difficult to host the raw results -- though all are available upon request and below I outline the size required for each.  Instead, here I host the results for a single sample for an example case (.tar.gz)
 |   │ 
 |   │    memory_stats.txt   : memory requirements of each tool-file pairing
-|   │ 
+|   │
+│   └─── program_inputs/            : external input files required for each program
+|   │
+|   │
 │   └─── 01_original/
 |   │   └─── hint/     : Contains *info, *.bed, *mpbs.bed, for the summary, global, and local results respectively. 
 |   │   └─── print/
@@ -138,17 +144,54 @@ scFootprintBenchmark
 │   └─── 04_frip/
 |   │   └─── hint/     : info_stats.tar.gz (5K), denovo_beds.tar.gz (4G), mpbs_beds.tar.gz (15G)
 |   │   └─── print/    : 
-|   │   └─── tobias/   : bigwigs.tar.gz (200G), bindetect_global_TF_results.tar.gz (2M), bindetect_local_TF_results.tar.gz (120G)
-|   │   └─── pwm/      : PWMmatch_beds.tar.gz (300G), PWMmatch_mats.tar.gz (5G)
+|   │   └─── tobias/   : bigwigs.tar.gz (350G), bindetect_global_TF_results.tar.gz (3M), bindetect_local_TF_results.tar.gz (180G)
+|   │   └─── pwm/      : PWMmatch_beds.tar.gz (300G), PWMmatch_mats.tar.gz (15G)
 |   │   └─── macs3/    : Peak calls for downsampled datasets (2G)
 |   │
 │   └─── 05_cellsim/
 |   │   └─── hint/     : info_stats.tar.gz (3K), denovo_beds.tar.gz (5G), mpbs_beds.tar.gz (20G)
 |   │   └─── print/    : 
-|   │   └─── tobias/   : bigwigs.tar.gz (200G), bindetect_global_TF_results.tar.gz (2M), bindetect_local_TF_results.tar.gz (120G)
-|   │   └─── pwm/      : PWMmatch_beds.tar.gz (300G), PWMmatch_mats.tar.gz (5G)
-|   │   └─── macs3/    : Peak calls for downsampled datasets (2G)
+|   │   └─── tobias/                     : bigwigs.tar.gz (500G), bindetect_global_TF_results.tar.gz (2M), bindetect_local_TF_results.tar.gz (250G)
+|
+|
+|
+└─── 06_dataquality
+│   │   01_MakeMatrices.ipynb            : Standardizes footprinting results into matrices
+|   │   02_CalculateMetrics.ipynb        : Calculates performance metrics across conditions
+|   │   03_AnalysisImages.ipynb          : Main Figures for data-quality analysis
+|   │   04_TFspecific.ipynb              : Analyses about what TFs generally footprint better
+|   │   05_PeakConsistency.ipynb         : Analyses about the influence of peak coverage on performance metrics.
+|   │
+|   │   └─── hint/
+|   │   │   mats.tar.gz                   : standardized matrices. Available at Zenodo
+|   │   │   └─── metrics/                 
+|   │   │   │   └─── no_threshold/         : contains metrics.tar.gz (per dataset performance metrics); *_bypeak.csv (per condiditon metrics calculated over peaks); and *_bytf.csv (per condiditon metrics calculated over TFs)
+|   │   │   |   │    |    metrics.tar.gz   : per dataset performance metrics
+|   │   │   |   │    |    *_bypeak.csv     : per condiditon metrics calculated over peaks
+|   │   │   |   │    |    *_bytf.csv       : per condiditon metrics calculated over TFs
+|   │   │   |   │
+|   │   │   │   └─── no_threshold_peak100/ : metrics considering peaks with coverage > 100
 
+                    
+|   │   └─── print/
+|   │   │   mats.tar.gz                   : standardized matrices. Available at Zenodo
+|   │   │   └─── metrics/                 
+|   │   │   │   └─── thresh_03/            : metrics using 0.3 as score threshold
+|   │   │   |   │    |    metrics.tar.gz   : per dataset performance metrics
+|   │   │   |   │    |    *_bypeak.csv     : per condiditon metrics calculated over peaks
+|   │   │   |   │    |    *_bytf.csv       : per condiditon metrics calculated over TFs
+|   │   │   |   │
+|   │   │   │   └─── thresh_03_peak100/    : metrics using 0.3 as score threshold and coverage > 100
+
+|   │   └─── tobias/
+|   │   │   mats.tar.gz                   : standardized matrices. Available at Zenodo
+
+|   │   └─── tfbs_universe/
+|   │   └─── cellxpeak/ 
+|
+└─── 06_dataquality
+
+-- need IC content file to proceed.
 
 ```
 

@@ -1,0 +1,33 @@
+==============================================================
+job_number:                 792906
+exec_file:                  job_scripts/792906
+submission_time:            Mon Nov 18 20:11:27 2024
+owner:                      aseveritt
+uid:                        61365
+group:                      pollard
+gid:                        22000
+sge_o_home:                 /wynton/home/pollard/aseveritt
+sge_o_log_name:             aseveritt
+sge_o_path:                 /wynton/home/pollard/aseveritt/.conda/envs/downsampling/bin:/wynton/home/cbi/shared/software/CBI/miniforge3-24.9.2-0/condabin:/wynton/home/cbi/shared/software/CBI/miniforge3-24.9.2-0/bin:/opt/sge/bin:/opt/sge/bin/lx-amd64:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/wynton/home/pollard/aseveritt/.local/bin:/wynton/home/pollard/aseveritt/bin
+sge_o_shell:                /bin/bash
+sge_o_workdir:              /pollard/data/projects/aseveritt/encode_snatacseq/05_footprinting/program_input_files/peakRData
+sge_o_host:                 dev1
+account:                    sge
+cwd:                        /pollard/data/projects/aseveritt/encode_snatacseq/05_footprinting/program_input_files/peakRData/
+merge:                      y
+hard resource_list:         mem_free=20G,scratch=50G,h_rt=86400
+mail_list:                  aseveritt@dev1.wynton.ucsf.edu
+notify:                     FALSE
+job_name:                   print_peaksub.sh
+jobshare:                   0
+hard_queue_list:            !*gpu.q
+shell_list:                 NONE:/bin/bash
+env_list:                   TERM=NONE
+script_file:                print_peaksub.sh
+parallel environment:  smp range: 16
+project:                    pollardlab
+binding:                    NONE
+job_type:                   NONE
+usage         1:            cpu=06:46:27, mem=617834.02231 GB s, io=328.74720 GB, vmem=30.223G, maxvmem=331.106G
+binding       1:            NONE
+scheduling info:            (Collecting of scheduler job information is turned off)
