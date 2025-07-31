@@ -119,7 +119,7 @@ scFootprintBenchmark
 │   └─── program_inputs/                      : external input files required for each program
 |   │
 │   └─── 01_original/
-|       └─── hint/                            : Contains *info, *.bed, *mpbs.bed, for the summary, global, and local results respectively. 
+|   │   └─── hint/                            : Contains *info, *.bed, *mpbs.bed, for the summary, global, and local results respectively. 
 |   │   └─── print/
 |   │   └─── tobias/                          : Contains *_ftscore.bw, *_corrected.bw, *_results.txt, and *_TF_overviews.txt, for the per-bp signal, tn5 corrected signal, global, and local results respectively
 |   │   └─── pwm/                             : Contains *.bed and *_mat.txt output from monaLisa
@@ -159,39 +159,39 @@ scFootprintBenchmark
 |   │   03_AnalysisImages.ipynb               : Main Figures for data-quality analysis
 |   │   04_TFspecific.ipynb                   : Analyses about what TFs generally footprint better
 |   │   05_PeakConsistency.ipynb              : Analyses about the influence of peak coverage on performance metrics.
-|   │   │
-|   │   └─── hint/
-|   │   │   mats.tar.gz                       : standardized matrices. Available at Zenodo
-|   │   │   └─── metrics/                 
-|   │   │   │   └─── no_threshold/            : metrics considering all peaks
-|   │   │   |   │    |    metrics.tar.gz      : per dataset performance metrics
-|   │   │   |   │    |    *_bypeak.csv        : per condiditon metrics calculated over peaks
-|   │   │   |   │    |    *_bytf.csv          : per condiditon metrics calculated over TFs
+|   │   
+│   └─── hint/ 
+|   │   mats.tar.gz                           : standardized matrices. Available at Zenodo
+|   │   └─── metrics/                 
+|   │   │   └─── no_threshold/                : metrics considering all peaks
+|   │   │   |   │    metrics.tar.gz           : per dataset performance metrics
+|   │   │   |   │    *_bypeak.csv             : per condiditon metrics calculated over peaks
+|   │   │   |   │    *_bytf.csv               : per condiditon metrics calculated over TFs
 |   │   │   |   │
-|   │   │   │   └─── no_threshold_peak100/    : metrics considering peaks with coverage > 100
-|   │   │   |   │    |    *_bytf.csv          : per condiditon metrics calculated over TFs
-|   │   │                
-|   │   └─── print/
-|   │   │   mats.tar.gz                       : standardized matrices. Available at Zenodo
-|   │   │   └─── metrics/                 
-|   │   │   │   └─── thresh_03/               : metrics using 0.3 as score threshold
-|   │   │   |   │    |    metrics.tar.gz      : per dataset performance metrics
-|   │   │   |   │    |    *_bypeak.csv.gz     : per condiditon metrics calculated over peaks
-|   │   │   |   │    |    *_bytf.csv.gz       : per condiditon metrics calculated over TFs
+|   │   │   └─── no_threshold_peak100/        : metrics considering peaks with coverage > 100
+|   │   │   |   │    *_bytf.csv               : per condiditon metrics calculated over TFs
+|   │                 
+│   └─── print/
+|   │   mats.tar.gz                           : standardized matrices. Available at Zenodo
+|   │   └─── metrics/                 
+|   │   │   └─── thresh_03/                   : metrics using 0.3 as score threshold
+|   │   │   |   │    metrics.tar.gz           : per dataset performance metrics
+|   │   │   |   │    *_bypeak.csv             : per condiditon metrics calculated over peaks
+|   │   │   |   │    *_bytf.csv               : per condiditon metrics calculated over TFs
 |   │   │   |   │
-|   │   │   │   └─── thresh_03_peak100/       : metrics using 0.3 as score threshold and coverage > 100
-|   │   │   |   │    |    *_bytf.csv.gz       : per condiditon metrics calculated over TFs
+|   │   │   └─── thresh_03_peak100/           : metrics using 0.3 as score threshold and coverage > 100
+|   │   │   |   │    *_bytf.csv               : per condiditon metrics calculated over TFs
 |   │   │ 
-|   │   └─── tobias/
-|   │   │   mats.tar.gz                       : standardized matrices. Available at Zenodo **missing**
-|   │   │   └─── metrics/                 
-|   │   │   │   └─── bound_threshold/         : metrics using bound = 1 as threshold
-|   │   │   |   │    |    metrics.tar.gz      : per dataset performance metrics
-|   │   │   |   │    |    *_bypeak.csv.gz     : per condiditon metrics calculated over peaks
-|   │   │   |   │    |    *_bytf.csv.gz       : per condiditon metrics calculated over TFs
+│   └─── tobias/
+|   │   mats.tar.gz                           : standardized matrices. Available at Zenodo **missing**
+|   │   └─── metrics/                 
+|   │   │   └─── bound_threshold/             : metrics using bound = 1 as threshold
+|   │   │   |   │    metrics.tar.gz           : per dataset performance metrics
+|   │   │   |   │    *_bypeak.csv             : per condiditon metrics calculated over peaks
+|   │   │   |   │    *_bytf.csv               : per condiditon metrics calculated over TFs
 |   │   │   |   │
-|   │   │   │   └─── bound_threshold_peak100/ : metrics using bound = 1 as threshold and coverage > 100
-|   │   │   |   │    |    *_bytf.csv.gz       : per condiditon metrics calculated over TFs
+|   │   │   └─── bound_threshold_peak100/     : metrics using bound = 1 as threshold and coverage > 100
+|   │   │   |   │    *_bytf.csv               : per condiditon metrics calculated over TFs
 |   │   │ 
 |   │   └─── tfbs_universe/                   : performance metrics per OCR
 |   │   │   PeakCoverage_*.csv.gz             : average read coverage per OCR for cell lines
