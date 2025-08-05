@@ -111,44 +111,53 @@ scFootprintBenchmark
 │ 
 |
 └─── 05_footprinting/
-|   │    **NOTE** due to size, its difficult to host the raw results -- though all are available upon request and below I outline the size required for each.
-|   │    Instead, here I host the results for a single sample for an example case (.tar.gz)
+    **NOTE**
+        Due to size, its difficult to host the raw results -- though all are available upon request and I outline the size required for each below.
+        Instead, we host an example for what the directory looks like when containing only a single file (singleFile_exampleOutput.tar.gz)
+
+        HINT directories contains *.info, *.bed, *mpbs.bed, for the summary, global FT, and local FT results respectively.
+        TOBIAS directories contain *_ftscore.bw, *_corrected.bw, *_results.txt, and *_TF_overviews.txt, for the per-bp signal, tn5 corrected signal, global FT, and local FT results respectively
+        PRINT directories contain *granges.bed which are the local FT results
+        PWM directories contain *.bed and *_mat.txt for the motif scanning results from monaLisa as either a bed file or peak-by-motif-matrix
+        MACS directories contain *_summits.bed and *_filt_500bp.exclusion.bed for the summit file and processed peak regions for each downsampled dataset. 
+
 |   │ 
 |   │    memory_stats.txt                     : memory requirements of each tool-file pairing
 |   │
 │   └─── program_inputs/                      : external input files required for each program
 |   │
-│   └─── 01_original/
-|   │   └─── hint/                            : Contains *info, *.bed, *mpbs.bed, for the summary, global, and local results respectively. 
-|   │   └─── print/
-|   │   └─── tobias/                          : Contains *_ftscore.bw, *_corrected.bw, *_results.txt, and *_TF_overviews.txt, for the per-bp signal, tn5 corrected signal, global, and local results respectively
-|   │   └─── pwm/                             : Contains *.bed and *_mat.txt output from monaLisa
 |   │
-│   └─── 02_cells/
+│   └─── 01_original/                         : full-depth footprinting results
+|   │   └─── hint/                            : info_stats.tar.gz (4K), denovo_beds.tar.gz (160M), mpbs_beds.tar.gz (600M)
+|   │   └─── print/                           : granges_beds.tar.gz (1.8G)
+|   │   └─── tobias/                          : bigwigs.tar.gz (15G), bindetect_global_TF_results.tar.gz (102K), bindetect_local_TF_results.tar.gz (8G)
+|   │   └─── pwm/                             : PWMmatch_beds.tar.gz (XX), PWMmatch_mats.tar.gz (600M)
+|   │
+│   └─── 02_cells/                            : cell-downsampling footprinting results
 |   │   └─── hint/                            : info_stats.tar.gz (5K), denovo_beds.tar.gz (4G), mpbs_beds.tar.gz (15G)
-|   │   └─── print/                           : 
+|   │   └─── print/                           : granges_beds.tar.gz (40G)
 |   │   └─── tobias/                          : bigwigs.tar.gz (300G), bindetect_global_TF_results.tar.gz (2M), bindetect_local_TF_results.tar.gz (200G)
 |   │   └─── pwm/                             : PWMmatch_beds.tar.gz (600G), PWMmatch_mats.tar.gz (12G)
 |   │   └─── macs3/                           : Peak calls for downsampled datasets (2G)
 |   │
-│   └─── 03_reads/
-|   │   HEPG2_r1e6_example.zip : ??
+│   └─── 03_reads/                            : read-downsampling footprinting results
+|   │   singleFile_exampleOutput.tar.gz.      : what this directory looks if only 1 sample was included (HEPG2_r5e6_s21= HEPG2 cell line, downsampled to 5e6 reads, using seed 21) -- available at Zenodo
 |   │   └─── hint/                            : info_stats.tar.gz (4K), denovo_beds.tar.gz (2G), mpbs_beds.tar.gz (8G)
-|   │   └─── print/                           : 
+|   │   └─── print/                           : granges_beds.tar.gz (30G)
 |   │   └─── tobias/                          : bigwigs.tar.gz (200G), bindetect_global_TF_results.tar.gz (2M), bindetect_local_TF_results.tar.gz (120G)
 |   │   └─── pwm/                             : PWMmatch_beds.tar.gz (300G), PWMmatch_mats.tar.gz (5G)
 |   │   └─── macs3/                           : Peak calls for downsampled datasets (1G)
 |   │
 │   └─── 04_frip/
 |   │   └─── hint/                            : info_stats.tar.gz (5K), denovo_beds.tar.gz (4G), mpbs_beds.tar.gz (15G)
-|   │   └─── print/                           : 
+|   │   └─── print/                           : granges_beds.tar.gz (XXG)
 |   │   └─── tobias/                          : bigwigs.tar.gz (350G), bindetect_global_TF_results.tar.gz (3M), bindetect_local_TF_results.tar.gz (180G)
 |   │   └─── pwm/                             : PWMmatch_beds.tar.gz (300G), PWMmatch_mats.tar.gz (15G)
 |   │   └─── macs3/                           : Peak calls for downsampled datasets (2G)
 |   │
 │   └─── 05_cellsim/
 |   │   └─── hint/                            : info_stats.tar.gz (3K), denovo_beds.tar.gz (5G), mpbs_beds.tar.gz (20G)
-|   │   └─── print/                           : 
+|   │   └─── print/                           : granges_beds.tar.gz (XXG)
 |   │   └─── tobias/                          : bigwigs.tar.gz (500G), bindetect_global_TF_results.tar.gz (2M), bindetect_local_TF_results.tar.gz (250G)
 |
 |
@@ -201,7 +210,5 @@ scFootprintBenchmark
 └─── 07_cellsim
 
 ```
-
-
 ---------------
 

@@ -1,0 +1,96 @@
+
+```{r}
+library(GenomicRanges)
+library(SummarizedExperiment)
+library(JASPAR2022)
+library(TFBSTools)
+
+library(monaLisa)
+library(ComplexHeatmap)
+library(circlize)
+library(RColorBrewer)
+library(tidyr)
+```
+
+```{r}
+CL = "SKNSH"
+```
+
+```{r}
+mat = read.csv(paste0("~/./", CL, "_heatmapinput.csv"))
+mat <- mat %>% separate(name, c("TF", "motif"), "_")
+
+add_version <- function(x) {
+  ave(x, x, FUN = function(z) {
+    if (length(z) == 1) return(z)
+    paste0(z, " v", seq_along(z))
+  })
+}
+
+mat$TF_name = add_version(mat$TF)
+mat[1:3,1:3]
+```
+
+
+```{r}
+pwms <- getMatrixSet(JASPAR2022, opts = list(matrixtype = "PFM", tax_group = "vertebrates"))
+logo_list = pwms[names(pwms) %in% mat$motif ]
+all_pfms <- TFBSTools::toPWM(logo_list, pseudocounts=0.8, type = "prob")
+
+mylist = list()
+for (motif in names(all_pfms)){
+  tmp = PWMSimilarity(all_pfms, all_pfms[[motif]], method="Euclidean")
+  mylist[[motif]] = as.vector(tmp)
+}
+
+sim_mat = do.call(cbind, mylist)
+rownames(sim_mat) = names(all_pfms)
+colnames(sim_mat) = names(all_pfms)
+sim_mat[1:3,1:3]
+```
+
+
+```{r}
+#Get Logos
+maxwidth <- max(vapply(TFBSTools::Matrix(logo_list), ncol, 0L))
+grobL <- lapply(logo_list, seqLogoGrob, xmax = maxwidth, xjust = "center")
+
+#Get the color schemes. 
+mycolpal = colorRamp2(c(0, 2, 4, 6, 8, 10), c("#FFFFED", "#D0DEEA", "#A1B7D4", "#8879B3", "#7C3A8E", "#511254"))
+row_colors <- ifelse(mat$highlight == 1, "#004CCC", "black")
+
+
+svg(paste0("~/Desktop/Fig5_", CL, ".svg"))
+hmSeqlogo <- HeatmapAnnotation(logo = annoSeqlogo(grobL = grobL, 
+                                                  which = "row", 
+                                                  space = unit(1, "mm"),
+                                                  width = unit(1, "inch"),
+                                                  height = unit(0.4, "inch")),
+                               which = "row",
+                               show_annotation_name = FALSE)
+
+#Cluster by logos or heatmap
+hc <- hclust(dist(sim_mat))
+
+tmp = as.matrix(mat[, c("hint","print", "tobias")])
+colnames(tmp) = toupper(colnames(tmp))
+Heatmap(tmp, 
+        row_labels = mat$TF_name,
+        left_annotation = hmSeqlogo, 
+        rect_gp = gpar(col = "white", lwd = 0.2),
+        col = mycolpal,
+        
+        cluster_columns = FALSE, 
+        cluster_rows = as.dendrogram(hc),
+        #cluster_rows = TRUE,
+        
+        column_names_side = "top",column_names_rot = 0,column_names_centered = TRUE,
+        row_names_side = "left",
+        width = unit(6, "cm"),
+        row_names_gp = gpar(col = row_colors, fontsize=10), 
+        show_row_dend = TRUE)
+dev.off()
+```
+
+
+
