@@ -23,6 +23,8 @@ The structure of the repository:
 | `05_footprinting/`    | Raw footprinting output files |
 | `06_dataquality/`     | Analysis of effect of data quality downsampling on footprinting (consistency) |
 | `07_cellsim/`         | Analysis of effect of cell similarity on footprinting (consistency) |
+| `08_acrosstoools/`    | Analysis of across-tool reproducibility |
+| `09_simPWMs/`         | Creation and analysis of synthetic PWMs |
 
 
 ```
@@ -111,16 +113,16 @@ scFootprintBenchmark
 │ 
 |
 └─── 05_footprinting/
-    **NOTE**
-        Due to size, its difficult to host the raw results -- though all are available upon request and I outline the size required for each below.
-        Instead, we host an example for what the directory looks like when containing only a single file (singleFile_exampleOutput.tar.gz)
-
-        HINT directories contains *.info, *.bed, *mpbs.bed, for the summary, global FT, and local FT results respectively.
-        TOBIAS directories contain *_ftscore.bw, *_corrected.bw, *_results.txt, and *_TF_overviews.txt, for the per-bp signal, tn5 corrected signal, global FT, and local FT results respectively
-        PRINT directories contain *granges.bed which are the local FT results
-        PWM directories contain *.bed and *_mat.txt for the motif scanning results from monaLisa as either a bed file or peak-by-motif-matrix
-        MACS directories contain *_summits.bed and *_filt_500bp.exclusion.bed for the summit file and processed peak regions for each downsampled dataset. 
-
+|   **NOTE**
+|   Due to size, its difficult to host the raw results -- though all are available upon request and I outline the size required for each below.
+|   Instead, we host an example for what the directory looks like when containing only a single file (singleFile_exampleOutput.tar.gz)
+|   
+|   HINT directories contains *.info, *.bed, *mpbs.bed, for the summary, global FT, and local FT results respectively.
+|   TOBIAS directories contain *_ftscore.bw, *_corrected.bw, *_results.txt, and *_TF_overviews.txt, for the per-bp signal, tn5 corrected signal, global FT, and local FT results respectively
+|   PRINT directories contain *granges.bed which are the local FT results
+|   PWM directories contain *.bed and *_mat.txt for the motif scanning results from monaLisa as either a bed file or peak-by-motif-matrix
+|   MACS directories contain *_summits.bed and *_filt_500bp.exclusion.bed for the summit file and processed peak regions for each downsampled dataset. 
+|   
 |   │ 
 |   │    memory_stats.txt                     : memory requirements of each tool-file pairing
 |   │
@@ -208,6 +210,23 @@ scFootprintBenchmark
 |
 |
 └─── 07_cellsim
+|
+|
+└─── 08_acrosstools
+|   │   00_AnalysisImages.ipynb               : Main Figures for across-tool analysis
+| 
+└─── 09_simPWMs
+|   │   01_MakeInputFiles.ipynb               : Reads & cosolidates footprinting results on synthetic PWMs 
+|   │   02_AnalysisImages.ipynb               : Data Viz and model fit
+|   │
+│   └─── 00_constructing_PWMs                 : Contains Rscript to create synthetic PWMs and the resulting individual .pwm files
+│   └─── 01_inputfiles                        : Created by 01_MakeInputFiles.ipynb, read by 02_AnalysisImages
+│
+│
+└─── 10_DEbinding
+│
+└─── 11_chip
+│
 
 ```
 ---------------

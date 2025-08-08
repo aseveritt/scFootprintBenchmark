@@ -1,0 +1,716 @@
+---
+title: "Simulated PWMs + IC values"
+output:
+  html_document:
+    toc: true
+    toc_float:
+      collapsed: false
+      smooth_scroll: false
+---
+
+
+__Author:__ Amanda Everitt 
+
+
+```{r, warning=FALSE}
+suppressPackageStartupMessages({
+  library(TFBSTools)
+  library(dplyr)
+  library(ggplot2)
+  library(tidyr)
+  library(ComplexHeatmap)
+  library(circlize)
+  library(gridExtra)
+  library(knitr)
+  library(RColorBrewer)
+  library(monaLisa)
+  library(BSgenome.Hsapiens.UCSC.hg38)
+  library(seqLogo)
+})
+
+setwd("../09_simPWMs/00_constructing_PWMs/") 
+
+#https://bioconductor.org/packages/release/bioc/vignettes/TFBSTools/inst/doc/TFBSTools.html#dynamic-random-profile-generation
+```
+
+# JASPAR PWMs
+## 1. Read in jaspar db and check the matrices look we expect. 
+### (showing a random motif here)
+
+```{r}
+jaspar_pcm <- TFBSTools::readJASPARMatrix("../../05_footprinting/program_input_files/JASPAR2022_CORE_vertebrates_non-redundant_pfms_jaspar.txt", matrixClass=c("PFM"))
+names(jaspar_pcm) = sapply(jaspar_pcm, function(x) paste0(toupper(x@name),"_", x@ID))
+
+jaspar_ppm <- TFBSTools::toPWM(jaspar_pcm, pseudocounts=0.8, type = "prob")
+
+jaspar_pwm <- TFBSTools::toPWM(jaspar_pcm, pseudocounts=0.8, type = "log2probratio")
+
+jaspar_icm <- toICM(jaspar_pcm, pseudocounts=0.8, schneider=TRUE)
+
+seqLogo(jaspar_ppm$ARNT2_MA1464.1@profileMatrix)
+print("pcm"); jaspar_pcm$ARNT2_MA1464.1@profileMatrix
+print("ppm"); jaspar_ppm$ARNT2_MA1464.1@profileMatrix
+print("pwm"); jaspar_pwm$ARNT2_MA1464.1@profileMatrix
+print("icm"); jaspar_icm$ARNT2_MA1464.1@profileMatrix
+```
+
+
+
+```{}
+#TEST CODE FOR SIMULATIONS. 
+#train dirichlet multinomial mixture model with max 6 components, 
+#used trained parameters to sample from matrices and create PPMs (though called PWMs here)
+
+dmmParameters <- dmmEM(jaspar_pcm[1:5], K=6, alg="C")
+ppmSampled <- rPWMDmm(jaspar_pcm[1:5], dmmParameters$alpha0, dmmParameters$pmix,
+                      N=1, W=5)
+ppmSampled[[1]]
+```
+
+### First road block:
+- The first thing I noticed is that the simulated results are returned as PPMs, but the ICM function only works on PCM matrices. Initially this seemed confusing, but its because the ICM function needs to know the total number of observations to do the schneider correction. 
+- Instead, lets calculate the IC ourselves from the ppms and add a constant observation value for the simulated ones. 
+- Code block below checks that my hand-calculated IC values and the programs are identical. 
+
+```{r}
+## THAT is why their ICM function wants the PCMs -- its for the schnieder correction that's based on the total observations. 
+
+mylist = list()
+
+for (tf in names(jaspar_icm)){
+  icm_mat = jaspar_icm[[tf]]@profileMatrix
+  pcm_mat = jaspar_pcm[[tf]]@profileMatrix
+  ppm_mat = jaspar_ppm[[tf]]@profileMatrix
+  
+  n_observed = colSums(pcm_mat)[1]
+  n_len = ncol(icm_mat)
+    
+  h = sum(ppm_mat * log2((ppm_mat/0.25)))
+  if (n_observed <= 30){
+    e = (2-TFBSTools:::schneider_Hnb_precomputed(n_observed)) * n_len
+  }else{
+    e = (2-TFBSTools:::schneider_Hnb_approx(n_observed, 2)) * n_len
+  }
+  
+  mylist[[tf]] = c(sum(icm_mat), #ic 
+                   n_len, #len
+                   n_observed, #obs
+                   h-e, #ic by hand. for no correction remove e.
+                   mean(ppm_mat["G",] + ppm_mat["C",]),
+                   max(mean(ppm_mat["A",]), mean(ppm_mat["G",]), 
+                       mean(ppm_mat["C",]), mean(ppm_mat["T",])))
+}
+
+
+ic_df = as.data.frame(do.call("rbind",mylist))
+colnames(ic_df) = c("IC","len","obs","IC_byHand","GC_content", "Repeat_content")
+ic_df$ic_len_norm = ic_df$IC/ic_df$len #check these are below 2. 
+ic_df$TF = rownames(ic_df)
+head(ic_df)
+```
+
+```{r}
+#some examples of the extremes
+seqLogo(jaspar_ppm$SP1_MA0079.5@profileMatrix)
+seqLogo(jaspar_ppm$ATF3_MA0605.2@profileMatrix)
+seqLogo(jaspar_ppm$ZNF384_MA1125.1@profileMatrix)
+```
+
+```{r, fig.height=6, fig.width=15}
+grid.arrange(
+ggplot(ic_df, aes(x=len)) + 
+    geom_histogram(color="black",fill="cornflowerblue", bins = 30) + theme_bw() +
+  ggtitle("Length of 841 motifs"), 
+
+ggplot(ic_df, aes(x=IC)) + 
+    geom_histogram(color="black",fill="cornflowerblue", bins = 30) + theme_bw() +
+  ggtitle("IC value"), 
+
+ggplot(ic_df, aes(x=ic_len_norm)) + 
+    geom_histogram( color="black",fill="cornflowerblue", bins = 30) + theme_bw() +
+  ggtitle("IC value divided by length"), 
+
+ggplot(ic_df, aes(x=obs)) + 
+    geom_histogram( color="black",fill="cornflowerblue", bins = 30) + theme_bw() +
+  ggtitle("Number of observations"), 
+
+ggplot(ic_df, aes(x=GC_content)) + 
+    geom_histogram( color="black",fill="cornflowerblue", bins = 30) + theme_bw() +
+  ggtitle("GC content"), 
+
+ggplot(ic_df, aes(x=Repeat_content)) + 
+    geom_histogram( color="black",fill="cornflowerblue", bins = 30) + theme_bw() +
+  ggtitle("Repeat content"),
+
+ncol=3
+)
+```
+
+```{r, fig.width=10, fig.height=10}
+grid.arrange(
+  ggplot(ic_df, aes(x=len, y=IC, color="FALSE")) + 
+    geom_point() + theme_bw() +
+    scale_color_manual(values = "black", name="fake") + 
+    ggtitle("PWM length by IC value"),
+  
+  ggplot(ic_df, aes(x=GC_content, y=IC, color="FALSE")) + 
+    geom_point() + theme_bw() +
+    scale_color_manual(values = "black", name="fake") + 
+    ggtitle("PWM GC content by IC value"),
+  
+  ggplot(ic_df, aes(x=GC_content, y=Repeat_content, color="FALSE")) + 
+    geom_point() + theme_bw() +
+    scale_color_manual(values = "black", name="fake") + 
+    ggtitle("GC content by Repeat Content"),
+  
+  ncol=2
+)
+
+```
+
+
+### Calculate genome prevalance of chr10. 
+```{r, eval=FALSE, warning=FALSE}
+seqs <- BSgenome::getSeq(BSgenome.Hsapiens.UCSC.hg38, "chr10")
+
+res <- findMotifHits(query = jaspar_pwm,
+                     subject = seqs,
+                     min.score = 6.0, 
+                     method = "matchPWM",
+                     BPPARAM = BiocParallel::MulticoreParam(workers=10)
+                     #BPPARAM = BiocParallel::SerialParam()
+                     )
+
+res$fullname = paste0(toupper(res$pwmname), "_", res$pwmid)
+tmp_df = data.frame(table(res$fullname))
+colnames(tmp_df) = c("TF", "chr10_prevalence")
+
+merged_df <- merge(ic_df, tmp_df, by="TF", all=TRUE) 
+
+write.csv(merged_df[, c("TF", "IC", "len", "obs", "GC_content", "Repeat_content", "chr10_prevalence")], file="jaspar2022_ICcontent.csv", quote=F, row.names = F)
+```
+
+```{r}
+merged_df = read.csv("jaspar2022_ICcontent.csv")
+head(merged_df)
+```
+
+```{r, fig.width=12, fig.height=12}
+model1 = lm(merged_df$chr10_prevalence ~ poly(merged_df$len, 2, raw=TRUE))
+model2 = lm(merged_df$chr10_prevalence ~ poly(merged_df$IC, 2, raw=TRUE))
+model3 = lm(merged_df$chr10_prevalence ~ poly(merged_df$GC_content, 2, raw=TRUE))
+model4 = lm(merged_df$chr10_prevalence ~ poly(merged_df$Repeat_content, 2, raw=TRUE))
+
+grid.arrange(
+  ggplot(merged_df, aes(x=chr10_prevalence, y = len, color="FALSE")) + 
+    geom_point() + theme_bw() + 
+    scale_color_manual(values = "black", name="fake") + 
+    ggtitle(paste0("PWM length R-squared: ", round(summary(model1)$r.squared, 3))),
+  
+  ggplot(merged_df, aes(x=chr10_prevalence, y = IC, color="FALSE")) + 
+    geom_point() + theme_bw() +
+    scale_color_manual(values = "black", name="fake") + 
+    ggtitle(paste0("PWM IC R-squared: ", round(summary(model2)$r.squared, 3))),
+  
+  ggplot(merged_df, aes(x=chr10_prevalence, y = GC_content, color="FALSE")) + 
+    geom_point() + theme_bw() +
+    scale_color_manual(values = "black", name="fake") + 
+    ggtitle(paste0("PWM GC content R-squared: ", round(summary(model3)$r.squared, 3))),
+  
+  ggplot(merged_df, aes(x=chr10_prevalence, y = Repeat_content, color="FALSE")) + 
+    geom_point() + theme_bw() +
+    scale_color_manual(values = "black", name="fake") + 
+    ggtitle(paste0("PWM Repeat content R-squared: ", round(summary(model4)$r.squared, 3))),
+  
+  ncol=2
+)
+```
+
+```{r}
+#max
+seqLogo(jaspar_ppm$ZNF354A_MA1978.1@profileMatrix)
+```
+
+
+## Simulations
+```{r}
+myseed = 10
+```
+
+### 1. Simulate values from all of the jaspar db
+```{r, include=FALSE}
+#train dirichlet multinomial mixture model with max 6 components, 
+#used trained parameters to sample from matrices and create PPMs (though called PWMs here)
+dmmParameters <- dmmEM(jaspar_pcm, K=6, alg="C")
+```
+```{r}
+#want ~59
+total_n = 6
+set.seed(myseed)
+ppmSampled1 <- c()
+for (i in seq(6, 24, 1)){
+  ppmSampled1 <- c(ppmSampled1, 
+                 rPWMDmm(jaspar_pcm, dmmParameters$alpha0, dmmParameters$pmix,
+                      N=total_n, W=i))
+}
+
+names(ppmSampled1) = paste0("FAKE_ALL_", 1:length(ppmSampled1))
+head(names(ppmSampled1))
+ppmSampled1[[1]]
+```
+
+### 2. Simulate values from all jaspar clusters with > 30 members. 
+```{r}
+### Read in outside info
+pwm_clusters = read.csv("../../05_footprinting/program_input_files/jaspar2022_motifs_to_clusters.txt", sep=" ", header = FALSE)
+colnames(pwm_clusters) = c("motif_id", "cluster")
+pwm_clusters$motif_id = toupper(pwm_clusters$motif_id)
+rownames(pwm_clusters) = pwm_clusters$motif_id
+head(pwm_clusters)
+```
+
+```{r}
+dnb_domains = read.table("../../05_footprinting/program_input_files/jaspar2022_dndbd.txt", sep="[", header = FALSE)
+dnb_domains$V1 =  gsub('.{1}$', '', dnb_domains$V1)
+dnb_domains$V2 =  gsub('.{2}$', '', dnb_domains$V2)
+dnb_domains$V3 =  gsub('.{1}$', '', dnb_domains$V3)
+dnb_domains = dnb_domains %>% 
+  tidyr::separate_wider_delim(V1, ",", names = c("motif", "tf"))  %>% 
+  tidyr::separate_wider_delim(V2, ",", names = c("class","class2"), too_few = "align_start")  %>% 
+  tidyr::separate_wider_delim(V3, ",", names = c("family","family2"), too_few = "align_start")  %>% 
+  as.data.frame()
+rownames(dnb_domains) = toupper(paste0(dnb_domains$tf, "_", dnb_domains$motif))
+
+head(dnb_domains)
+```
+
+```{r, include=FALSE}
+large_clust = names(table(pwm_clusters$cluster)[table(pwm_clusters$cluster) > 30])
+
+ppmSampled2 <- c()
+for (n in large_clust){
+  clust = pwm_clusters[pwm_clusters$cluster == n, "motif_id"]
+  sub_jaspar_pcm = jaspar_pcm[names(jaspar_pcm) %in% clust]
+  dmmParameters <- dmmEM(sub_jaspar_pcm, K=6, alg="C")
+
+  total_n = 3
+  set.seed(myseed)
+  internal <- c()
+  for (i in seq(6, 24, 2)){
+    internal <- c(internal, 
+                 rPWMDmm(sub_jaspar_pcm, dmmParameters$alpha0, dmmParameters$pmix,
+                      N=total_n, W=i))
+  }
+  names(internal) = paste0("FAKE_C", gsub("cluster", "", n), "_", 1:length(internal))
+  ppmSampled2 = c(ppmSampled2, internal)
+}
+
+head(names(ppmSampled2))
+```
+
+### 3. Simulate values from USF factors. 
+```{r}
+usf <- read.csv("../../05_footprinting/program_input_files/USF_list.csv", header=FALSE)
+```
+```{r, include=FALSE}
+usf_motifs = names(jaspar_pcm)[sub("\\_.*", "", names(jaspar_pcm)) %in% usf$V1]
+sub_jaspar_pcm = jaspar_pcm[names(jaspar_pcm) %in% usf_motifs]
+dmmParameters <- dmmEM(sub_jaspar_pcm, K=6, alg="C")
+```
+```{r, include=FALSE}
+total_n = 3
+set.seed(myseed)
+ppmSampled3 <- c()
+for (i in seq(6, 24, 2)){
+  ppmSampled3 <- c(ppmSampled3, 
+                 rPWMDmm(sub_jaspar_pcm, dmmParameters$alpha0, dmmParameters$pmix,
+                      N=total_n, W=i))
+}
+names(ppmSampled3) = paste0("FAKE_USF_", 1:length(ppmSampled3))
+head(names(ppmSampled3))
+```
+
+### 4. Join them all together and plot
+```{r}
+#join them all together
+ppmSampled = c(ppmSampled1, ppmSampled2, ppmSampled3)
+for (i in names(ppmSampled)){ rownames(ppmSampled[[i]]) = c("A", "C", "G", "T") }
+```
+
+```{r}
+mylist = list()
+obs = 4000 #around the median(ic_df$obs)
+
+for (tf in names(ppmSampled)){
+  ppm = ppmSampled[[tf]]
+  
+  h = sum(ppm * log2((ppm/0.25)))
+  curr_len = ncol(ppm)
+  e = (2-TFBSTools:::schneider_Hnb_approx(100, 2)) * curr_len
+  
+  mylist[[tf]] = c(tf,
+                   h-e, #ic
+                   curr_len,
+                   mean(ppm["G",] + ppm["C",]),
+                   max(mean(ppm["A",]), mean(ppm["G",]), 
+                       mean(ppm["C",]), mean(ppm["T",]))
+                   )
+}
+
+ic_df_sim = as.data.frame(do.call("rbind",mylist))
+colnames(ic_df_sim) = c("TF", "IC", "len", "GC_content", "Repeat_content")
+head(ic_df_sim)
+```
+
+```{r}
+pcmSampled = TFBSTools:::PFMatrixList()
+for (i in names(ppmSampled)){
+  a <- PFMatrix(ID=i, name=i, 
+                matrixClass="fake",
+                bg=c(A=0.25, C=0.25, G=0.25, T=0.25),
+                profileMatrix=round(ppmSampled[[i]]*4000)
+                )
+  #pcmSampled = c(pcmSampled, list(i = a))
+  pcmSampled[[i]] = a
+}
+pwmSampled <- TFBSTools::toPWM(pcmSampled, pseudocounts=0.8)
+```
+
+```{r, warning=FALSE}
+seqs <- BSgenome::getSeq(BSgenome.Hsapiens.UCSC.hg38, "chr10")
+
+res <- findMotifHits(query = pwmSampled,
+                     subject = seqs,
+                     min.score = 6.0, 
+                     method = "matchPWM",
+                     BPPARAM = BiocParallel::MulticoreParam(workers=10)
+                     #BPPARAM = BiocParallel::SerialParam()
+                     )
+
+res$pwmid <- as.factor(res$pwmid)
+tmp_df = data.frame(tabulate(res$pwmid))
+colnames(tmp_df) = c("chr10_prevalence")
+tmp_df$TF = levels(res$pwmid)
+
+merged_df <- merge(ic_df_sim, tmp_df, by="TF", all=TRUE) 
+write.csv(merged_df, file="simulated_ICcontent.csv", quote=F, row.names = F)
+```
+
+
+```{r}
+merged_df = read.csv("jaspar2022_ICcontent.csv")
+merged_df$fake = FALSE
+merged_df$fake_group = "not_simulated"
+
+merged_df_sim = read.csv("simulated_ICcontent.csv")
+merged_df_sim$fake = TRUE
+merged_df_sim$fake_group = "simulated"
+merged_df_sim$fake_group = sub("\\_.*", "", gsub("FAKE_", "", merged_df_sim$TF))
+
+cols = c("TF", "IC", "len", "GC_content", "Repeat_content", "chr10_prevalence", "fake", "fake_group")
+plot_df = rbind(merged_df[,cols], 
+                merged_df_sim[,cols])
+
+plot_df$fake_group <- as.factor(plot_df$fake_group)
+plot_df$fake_group = relevel(plot_df$fake_group, ref = "not_simulated")
+plot_df[c("IC", "len", "GC_content", "Repeat_content")] <- sapply(plot_df[c("IC", "len", "GC_content", "Repeat_content")],as.numeric)
+```
+
+
+```{r, fig.width=10, fig.height=10}
+grid.arrange(
+  ggplot(plot_df, aes(x=len, y=IC, color=fake)) + 
+    geom_point() + 
+    theme_bw() +
+    scale_color_manual(values=c("black","red")),
+  
+  ggplot(plot_df, aes(x=len, y=IC, color=fake_group)) + 
+    geom_point() + 
+    theme_bw() +
+    scale_color_manual(values=c("black","blue",rep("orange", 7),"red")),
+  
+  ncol=2
+)
+```
+
+```{r, fig.width=10, fig.height=10}
+grid.arrange(
+  ggplot(plot_df, aes(x=GC_content, y=Repeat_content, color=fake)) + 
+    geom_point() + 
+    theme_bw() +
+    scale_color_manual(values=c("black","red")),
+  
+  ggplot(plot_df, aes(x=GC_content, y=Repeat_content, color=fake_group)) + 
+    geom_point() + 
+    theme_bw() +
+    scale_color_manual(values=c("black","blue",rep("orange", 7),"red")),
+  
+  ncol=2
+)
+```
+
+```{r, fig.width=12, fig.height=12}
+#add in the fake ones when done. 
+grid.arrange(
+  ggplot(plot_df, aes(x=chr10_prevalence, y = len, color=fake)) + 
+    geom_point() + theme_bw() +
+    scale_color_manual(values=c("black","red")),
+  
+  ggplot(plot_df, aes(x=chr10_prevalence, y = IC, color=fake)) + 
+    geom_point() + theme_bw() +
+    scale_color_manual(values=c("black","red")),
+  
+  ggplot(plot_df, aes(x=chr10_prevalence, y = GC_content, color=fake)) + 
+    geom_point() + theme_bw() +
+    scale_color_manual(values=c("black","red")),
+  
+  ggplot(plot_df, aes(x=chr10_prevalence, y = Repeat_content, color=fake)) + 
+    geom_point() + theme_bw() +
+    scale_color_manual(values=c("black","red")),
+  
+  ncol=2
+)
+```
+
+-  remove the low length and low ic scores. 
+```{r}
+rem = plot_df[plot_df$fake ==TRUE & (plot_df$IC < 5 | plot_df$IC > 25), "TF"]
+
+rem2 = plot_df[plot_df$fake ==TRUE & (plot_df$Repeat_content > 0.7), "TF"]
+
+rem3 = plot_df[plot_df$fake ==TRUE & (plot_df$chr10_prevalence > 2.5e6), "TF"]
+
+extremeICs = plot_df[plot_df$fake ==TRUE & (plot_df$IC < 10 | plot_df$IC > 20), "TF"]
+set.seed(myseed)
+rem4 = sample(extremeICs, round(length(extremeICs)*0.3))
+
+
+plot_df = plot_df[!plot_df$TF %in% c(rem, rem2, rem3, rem4), ]
+pwmSampled = pwmSampled[!names(pwmSampled) %in% c(rem, rem2, rem3, rem4)]
+pcmSampled = pcmSampled[!names(pcmSampled) %in% c(rem, rem2, rem3, rem4)]
+```
+
+```{r, fig.width=10, fig.height=10}
+grid.arrange(
+  ggplot(plot_df, aes(x=len, y=IC, color=fake)) + 
+    geom_point() + 
+    theme_bw() +
+    scale_color_manual(values=c("black","red")),
+  
+  ggplot(plot_df, aes(x=len, y=IC, color=fake_group)) + 
+    geom_point() + 
+    theme_bw() +
+    scale_color_manual(values=c("black","blue",rep("orange", 7),"red")),
+  
+  ncol=2
+)
+```
+
+```{r, fig.width=10, fig.height=10}
+grid.arrange(
+  ggplot(plot_df, aes(x=GC_content, y=Repeat_content, color=fake)) + 
+    geom_point() + 
+    theme_bw() +
+    scale_color_manual(values=c("black","red")),
+  
+  ggplot(plot_df, aes(x=GC_content, y=Repeat_content, color=fake_group)) + 
+    geom_point() + 
+    theme_bw() +
+    scale_color_manual(values=c("black","blue",rep("orange", 7),"red")),
+  
+  ncol=2
+)
+```
+
+```{r, fig.width=12, fig.height=12}
+#add in the fake ones when done. 
+grid.arrange(
+  ggplot(plot_df, aes(x=chr10_prevalence, y = len, color=fake_group)) + 
+    geom_point() + theme_bw() +
+    scale_color_manual(values=c("black","blue",rep("orange", 7),"red")),
+  
+  ggplot(plot_df, aes(x=chr10_prevalence, y = IC, color=fake_group)) + 
+    geom_point() + theme_bw() +
+    scale_color_manual(values=c("black","blue",rep("orange", 7),"red")),
+  
+  ggplot(plot_df, aes(x=chr10_prevalence, y = GC_content, color=fake_group)) + 
+    geom_point() + theme_bw() +
+    scale_color_manual(values=c("black","blue",rep("orange", 7),"red")),
+  
+  ggplot(plot_df, aes(x=chr10_prevalence, y = Repeat_content, color=fake_group)) + 
+    geom_point() + theme_bw() +
+    scale_color_manual(values=c("black","blue",rep("orange", 7),"red")),
+  
+  ncol=2
+)
+```
+
+
+```{r}
+svg("FigS5_simPWMs.svg", width = 25, height = 8)
+grid.arrange(
+  ggplot(plot_df, aes(x=chr10_prevalence, y = len, color=fake)) + 
+    geom_point() + theme_bw() +
+    theme(legend.position="none", axis.text = element_text(size = 24)) +
+    xlab("") + ylab("") +
+    scale_color_manual(values=c("black","orange")),
+  
+  ggplot(plot_df, aes(x=chr10_prevalence, y = IC, color=fake)) + 
+    geom_point() + theme_bw() +
+    theme(legend.position="none", axis.text = element_text(size = 24)) +
+    xlab("") + ylab("") +
+    scale_color_manual(values=c("black","orange")),
+  
+  ggplot(plot_df, aes(x=chr10_prevalence, y = GC_content, color=fake)) + 
+    geom_point() + theme_bw() +
+    theme(legend.position="none", axis.text = element_text(size = 24)) +
+    xlab("") + ylab("") +
+    scale_color_manual(values=c("black","orange")),
+  ncol=3
+)
+dev.off()
+```
+
+
+```{r}
+seqLogo(ppmSampled$FAKE_C10_9)
+seqLogo(ppmSampled$FAKE_C6_3)
+seqLogo(ppmSampled$FAKE_C10_14)
+```
+
+
+### 5. How similar are the fake + real ones?
+```{r}
+#which = "Euclidean"
+which = "Pearson"
+
+all_pwms = c(jaspar_pwm, pwmSampled)
+
+mylist = list()
+for (tf in names(all_pwms)){
+  tmp = PWMSimilarity(all_pwms, all_pwms[[tf]], method=which)
+  mylist[[tf]] = as.vector(tmp)
+}
+
+sim_mat = do.call(cbind, mylist)
+rownames(sim_mat) = names(all_pwms)
+sim_mat[1:3,1:3]
+```
+
+```{r, fig.height=20, fig.width=20}
+clusters_tokeep = names(table(pwm_clusters$cluster)[table(pwm_clusters$cluster) > 30])
+tfs_tokeep = rownames(pwm_clusters[pwm_clusters$cluster %in% clusters_tokeep, ])
+
+sim_mat_sub = sim_mat[rownames(sim_mat) %in% tfs_tokeep, colnames(sim_mat) %in% tfs_tokeep]
+
+colors <- brewer.pal(length(clusters_tokeep), "Set3")  
+cluster_color <- setNames(colors, clusters_tokeep)
+
+ha = HeatmapAnnotation(JASPAR_CLUSTER = pwm_clusters[match(colnames(sim_mat_sub), rownames(pwm_clusters)), "cluster"],
+                       col = list(JASPAR_CLUSTER = cluster_color))
+
+Heatmap(as.matrix(sim_mat_sub), 
+        top_annotation = ha,
+        col=colorRamp2(c(1, 0.8, 0.3, 0), c("#800080", "cornflowerblue", "white", "white")), 
+        name = "Pearson Distance",
+        show_row_names = FALSE,
+        show_column_names = FALSE)
+```
+
+```{r, fig.height=20, fig.width=20}
+sim_mat_sub = sim_mat[rownames(sim_mat) %in% names(jaspar_pwm), colnames(sim_mat) %in% names(jaspar_pwm)]
+Heatmap(as.matrix(sim_mat_sub), 
+        col=colorRamp2(c(1, 0.8, 0.3, 0), c("#800080", "cornflowerblue", "white", "white")), 
+        name = "Pearson Distance",
+        show_row_names = FALSE,
+        show_column_names = FALSE)
+```
+
+```{r, fig.height=20, fig.width=20}
+png("FigS5_simPWMs_heatmap.png", width = 3000, height = 1500, units = "px", res = 300)
+ha = HeatmapAnnotation(simulated = ifelse(grepl("FAKE", colnames(sim_mat)), "simulated", "real"),
+                       col = list(simulated = c("real" = "black", "simulated"="orange"))
+)
+Heatmap(as.matrix(sim_mat), 
+        col=colorRamp2(c(1, 0.8, 0.3, 0), c("#800080", "cornflowerblue", "white", "white")), 
+        name = "Pearson Distance",
+        top_annotation = ha,
+        show_row_names = FALSE,
+        show_column_names = FALSE)
+dev.off()
+```
+
+
+## Finally, output files so that footprinting can take place. 
+```{r}
+write_matrix_to_file <- function(i, filename) {
+  matrix = pcmSampled[[i]]@profileMatrix
+  
+  lines <- apply(matrix, 1, function(row) {
+    row_name <- rownames(matrix)[which(apply(matrix, 1, identical, y = row))]
+    paste(row_name, "[", paste(sprintf("%5d", row), collapse=" "), "]")
+  })
+  # Use cat to append to the file
+  cat(paste0(">", i, "\t", i), file = filename, sep = "\n", append = TRUE)
+  cat(paste(lines, collapse = "\n"), file = filename, sep = "\n", append = TRUE)
+}
+
+# Write the output matrix to a file
+for (i in names(pcmSampled)){
+  write_matrix_to_file(i, "Simulated_PFMs_jaspar.txt")
+}
+```
+
+```{r}
+mydir = "final_simPWMs/"
+dir.create(mydir, recursive = TRUE, showWarnings = FALSE)
+for (i in names(pcmSampled)){
+  filename = paste0(i, ".pwm")
+  write.table(pcmSampled[[i]]@profileMatrix, 
+              paste0(mydir, filename), 
+              quote = F, row.names = F, col.names = F)
+}
+```
+
+```{r}
+save.image(file="checkpoint.RData")
+```
+
+```{r}
+sessionInfo()
+```
+
+
+
+```{r}
+#version of monaLisa::dumpJaspar
+
+#filename="~/Desktop/JASPAR2022_CORE_vertebrates_non-redundant_pfms_homer.motif"
+#siteList <- TFBSTools::readJASPARMatrix("~/projects/benchmarking/simulatedPWMs/JASPAR2022_CORE_vertebrates_non-redundant_pfms_jaspar.txt", matrixClass=c("PFM"))
+
+load("~/checkpoint.RData")
+siteList = pcmSampled
+filename="~/Desktop/Simulated_PFMs_homer.motif"
+
+pseudocount = 1
+fh <- file(filename, "wb")
+
+for (i in seq_len(length(siteList))) {
+  ppm <- TFBSTools::Matrix(siteList[[i]]) + pseudocount
+  ppm <- t(t(ppm)/colSums(ppm))
+  tmp.rn <- rownames(ppm)
+  scorecut <- log(2^10)
+  ppm <- apply(ppm, 2, function(x) { sprintf("%.3f", x) })
+  rownames(ppm) <- tmp.rn
+  wm.name <- paste0(TFBSTools::ID(siteList[[i]]), ":::", 
+                    TFBSTools::name(siteList[[i]]))
+  cat(sprintf(">%s\t%s\t%.2f\t-10\n", paste(apply(ppm, 2, function(x) {
+    rownames(ppm)[which.max(x)]
+    }), collapse = ""), wm.name, scorecut), file = fh, append = TRUE)
+  write.table(file = fh, t(ppm), row.names = FALSE, col.names = FALSE, 
+              sep = "\t", quote = FALSE, append = TRUE)
+  flush(fh)
+}
+close(fh)
+    
+```
