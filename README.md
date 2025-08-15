@@ -1,10 +1,11 @@
 
 # Comparative evaluation of genomic footprinting algorithms for predicting transcription factor binding sites in single-cell data.
 
+[Publication](https://www.biorxiv.org/content/10.1101/2025.08.07.669008v1)
+[Zenodo](TBD)
+
 ### Abstract
 Transcription factors (TFs) have millions of potential binding sites across the human genome, but only a fraction are bound in a given context. Genomic footprinting aims to identify context-specific binding sites by detecting patterns in open chromatin data. While powerful, these approaches face technical challenges, especially in single-cell applications. We developed a benchmarking framework for cell-type specific footprinting and used it to evaluate the consistency, reproducibility, and equivalency of three leading methods across data quality scenarios and as a function of cell-type similarity. Peak-level read coverage emerged as the strongest predictor of stable footprints. Motivated by limited reproducibility across tools, we built an ensemble model that improved concordance with ChIP-seq. To encourage broader adoption and development of footprinting, we provide practical guidelines for robust genomic footprinting in single-cell datasets and a roadmap for extracting deeper insights about how gene regulatory networks vary across cell types in complex tissues. 
-
--- Citation TBD -- 
 
 ---------------
 The structure of the repository:
@@ -25,6 +26,8 @@ The structure of the repository:
 | `07_cellsim/`         | Analysis of effect of cell similarity on footprinting (consistency) |
 | `08_acrosstoools/`    | Analysis of across-tool reproducibility |
 | `09_simPWMs/`         | Creation and analysis of synthetic PWMs |
+| `10_DEbinding/`       | Comparing the DE binding modules of HINT and TOBIAS |
+| `11_chip/`            | Analysis using ChIP seq as the ground truth |
 
 
 ```
@@ -143,7 +146,7 @@ scFootprintBenchmark
 |   │   └─── macs3/                           : Peak calls for downsampled datasets (2G)
 |   │
 │   └─── 03_reads/                            : read-downsampling footprinting results
-|   │   singleFile_exampleOutput.tar.gz.      : what this directory looks if only 1 sample was included (HEPG2_r5e6_s21= HEPG2 cell line, downsampled to 5e6 reads, using seed 21) -- available at Zenodo
+|   │   singleFile_exampleOutput.tar.gz       : what this directory looks if only 1 sample was included (HEPG2_r5e6_s21= HEPG2 cell line, downsampled to 5e6 reads, using seed 21) -- available at Zenodo
 |   │   └─── hint/                            : info_stats.tar.gz (4K), denovo_beds.tar.gz (2G), mpbs_beds.tar.gz (8G)
 |   │   └─── print/                           : granges_beds.tar.gz (30G)
 |   │   └─── tobias/                          : bigwigs.tar.gz (200G), bindetect_global_TF_results.tar.gz (2M), bindetect_local_TF_results.tar.gz (120G)
@@ -164,7 +167,7 @@ scFootprintBenchmark
 |
 |
 |
-└─── 06_dataquality
+└─── 06_dataquality/
 │   │   01_MakeMatrices.ipynb                 : Standardizes footprinting results into matrices
 |   │   02_CalculateMetrics.ipynb             : Calculates performance metrics across conditions
 |   │   03_AnalysisImages.ipynb               : Main Figures for data-quality analysis
@@ -209,24 +212,36 @@ scFootprintBenchmark
 |   │   │   peaks_by_sampling.csv.gz          : number of peaks retained when filtering by 100 or 50 reads          
 |
 |
-└─── 07_cellsim
+└─── 07_cellsim/
 |
 |
-└─── 08_acrosstools
+└─── 08_acrosstools/
 |   │   00_AnalysisImages.ipynb               : Main Figures for across-tool analysis
+|   │   tobias_thresholds.txt.gz
 | 
 └─── 09_simPWMs
 |   │   01_MakeInputFiles.ipynb               : Reads & cosolidates footprinting results on synthetic PWMs 
 |   │   02_AnalysisImages.ipynb               : Data Viz and model fit
 |   │
-│   └─── 00_constructing_PWMs                 : Contains Rscript to create synthetic PWMs and the resulting individual .pwm files
-│   └─── 01_inputfiles                        : Created by 01_MakeInputFiles.ipynb, read by 02_AnalysisImages
+│   └─── 00_constructing_PWMs/                : Contains Rscript to create synthetic PWMs and the resulting individual .pwm files
+│   └─── 01_inputfiles/                       : Created by 01_MakeInputFiles.ipynb, read by 02_AnalysisImages
 │
 │
-└─── 10_DEbinding
+└─── 10_DEbinding/
+|   │   00_GenerateSubs.ipynb                 : SGE submission scripts to run DE binding within- and across- samples
+|   │   01_TOBIAS.ipynb                       : TOBIAS DE binding module figures
+|   │   02_HINT.ipynb                         : HINT DE binding module figures
+|   │
+│   └─── 01_inputfiles/                       : smaller input files for within-, across-, and cellline comparisons
 │
-└─── 11_chip
+└─── 11_chip/
+|   │   01_BuildPerformance.ipynb             : Preprocessing & alternative ways to calculate performance using ChIP as ground truth
+|   │   02_AnalysisImages.ipynb               : Downsampling analysis using ChIP-seq as the reference
+|   │
+│   └─── 01_inputfiles/                       : input files for scripts. Downloadable at Zenodo (11_chip-01_inputfiles.tar.gz)
 │
+│
+whew. 
 
 ```
 ---------------
