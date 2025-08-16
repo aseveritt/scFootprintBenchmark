@@ -2,6 +2,7 @@
 # Comparative evaluation of genomic footprinting algorithms for predicting transcription factor binding sites in single-cell data.
 
 [Publication](https://www.biorxiv.org/content/10.1101/2025.08.07.669008v1)
+
 [Zenodo](TBD)
 
 ### Abstract
@@ -173,9 +174,11 @@ scFootprintBenchmark
 |   │   03_AnalysisImages.ipynb               : Main Figures for data-quality analysis
 |   │   04_TFspecific.ipynb                   : Analyses about what TFs generally footprint better
 |   │   05_PeakConsistency.ipynb              : Analyses about the influence of peak coverage on performance metrics.
+|   │
+|   │   baseline_cleaned_beds.tar.gz          : unfiltered, but cleaned and standardized bed files for the original "baseline" samples. In each tool directory will create a "cleaned" directory. Available at Zenodo
+|   │   mats.tar.gz                           : standardized matrices for all tools and conditions. In each tool directory will create a "mats" directory. Available at Zenodo (06_dataquality-mats.tar.gz)
 |   │   
 │   └─── hint/ 
-|   │   mats.tar.gz                           : standardized matrices. Available at Zenodo
 |   │   └─── metrics/                 
 |   │   │   └─── no_threshold/                : metrics considering all peaks
 |   │   │   |   │    metrics.tar.gz           : per dataset performance metrics
@@ -186,7 +189,6 @@ scFootprintBenchmark
 |   │   │   |   │    *_bytf.csv               : per condiditon metrics calculated over TFs
 |   │                 
 │   └─── print/
-|   │   mats.tar.gz                           : standardized matrices. Available at Zenodo
 |   │   └─── metrics/                 
 |   │   │   └─── thresh_03/                   : metrics using 0.3 as score threshold
 |   │   │   |   │    metrics.tar.gz           : per dataset performance metrics
@@ -197,7 +199,6 @@ scFootprintBenchmark
 |   │   │   |   │    *_bytf.csv               : per condiditon metrics calculated over TFs
 |   │   │ 
 │   └─── tobias/
-|   │   mats.tar.gz                           : standardized matrices. Available at Zenodo **missing**
 |   │   └─── metrics/                 
 |   │   │   └─── bound_threshold/             : metrics using bound = 1 as threshold
 |   │   │   |   │    metrics.tar.gz           : per dataset performance metrics
@@ -207,18 +208,28 @@ scFootprintBenchmark
 |   │   │   └─── bound_threshold_peak100/     : metrics using bound = 1 as threshold and coverage > 100
 |   │   │   |   │    *_bytf.csv               : per condiditon metrics calculated over TFs
 |   │   │ 
-|   │   └─── tfbs_universe/                   : performance metrics per OCR
-|   │   │   PeakCoverage_*.csv.gz             : average read coverage per OCR for cell lines
-|   │   │   peaks_by_sampling.csv.gz          : number of peaks retained when filtering by 100 or 50 reads          
+│   └─── tfbs_universe/                       : performance metrics per OCR
+|   │   PeakCoverage_*.csv.gz                 : average read coverage per OCR for cell lines
+|   │   peaks_by_sampling.csv.gz              : number of peaks retained when filtering by 100 or 50 reads          
 |
 |
 └─── 07_cellsim/
+|   **NOTE** Not listing it out, but this directory follows a similar structure to above with the per-tool metric files.
+|   
+|   │   01_Preprocessing.ipynb                : Standardizes footprinting results into matrices & calculate performance metrics. 
+|   │   02_AnalysisImages.ipynb               : Main Figures for cell similarity analysis
+|   │
+|   │   mats.tar.gz                           : standardized matrices for all tools and conditions. In each tool directory will create a "mats" directory. Available at Zenodo (07_cellsim-mats.tar.gz)
 |
 |
 └─── 08_acrosstools/
 |   │   00_AnalysisImages.ipynb               : Main Figures for across-tool analysis
-|   │   tobias_thresholds.txt.gz
-| 
+|   │   tobias_thresholds.txt.gz              : Tobias "bound" thresholds across downsampling
+|   │   motif_enrichment.tar.gz               : HOMER motif enrichment for cell-line peak files
+|   │   baseline_pwmdf.csv.gz                 : Consolidated motif scanning results in original ("baseline") cell lines
+|   │   HEPG2_decile_metrics.csv.gz           : Score decile analysis for HEPG2 
+|
+|
 └─── 09_simPWMs
 |   │   01_MakeInputFiles.ipynb               : Reads & cosolidates footprinting results on synthetic PWMs 
 |   │   02_AnalysisImages.ipynb               : Data Viz and model fit
@@ -226,7 +237,7 @@ scFootprintBenchmark
 │   └─── 00_constructing_PWMs/                : Contains Rscript to create synthetic PWMs and the resulting individual .pwm files
 │   └─── 01_inputfiles/                       : Created by 01_MakeInputFiles.ipynb, read by 02_AnalysisImages
 │
-│
+|
 └─── 10_DEbinding/
 |   │   00_GenerateSubs.ipynb                 : SGE submission scripts to run DE binding within- and across- samples
 |   │   01_TOBIAS.ipynb                       : TOBIAS DE binding module figures
@@ -234,6 +245,7 @@ scFootprintBenchmark
 |   │
 │   └─── 01_inputfiles/                       : smaller input files for within-, across-, and cellline comparisons
 │
+|
 └─── 11_chip/
 |   │   01_BuildPerformance.ipynb             : Preprocessing & alternative ways to calculate performance using ChIP as ground truth
 |   │   02_AnalysisImages.ipynb               : Downsampling analysis using ChIP-seq as the reference
