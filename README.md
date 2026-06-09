@@ -3,7 +3,7 @@
 
 [Publication](https://www.biorxiv.org/content/10.1101/2025.08.07.669008v1)
 
-[Zenodo](TBD)
+[Zenodo](https://zenodo.org/records/16883987)
 
 ### Abstract
 Transcription factors (TFs) have millions of potential binding sites across the human genome, but only a fraction are bound in a given context. Genomic footprinting aims to identify context-specific binding sites by detecting patterns in open chromatin data. While powerful, these approaches face technical challenges, especially in single-cell applications. We developed a benchmarking framework for cell-type specific footprinting and used it to evaluate the consistency, reproducibility, and equivalency of three leading methods across data quality scenarios and as a function of cell-type similarity. Peak-level read coverage emerged as the strongest predictor of stable footprints. Motivated by limited reproducibility across tools, we built an ensemble model that improved concordance with ChIP-seq. To encourage broader adoption and development of footprinting, we provide practical guidelines for robust genomic footprinting in single-cell datasets and a roadmap for extracting deeper insights about how gene regulatory networks vary across cell types in complex tissues. 
@@ -25,7 +25,7 @@ The structure of the repository:
 | `05_footprinting/`    | Raw footprinting output files |
 | `06_dataquality/`     | Analysis of effect of data quality downsampling on footprinting (consistency) |
 | `07_cellsim/`         | Analysis of effect of cell similarity on footprinting (consistency) |
-| `08_acrosstoools/`    | Analysis of across-tool reproducibility |
+| `08_acrosstools/`     | Analysis of across-tool reproducibility |
 | `09_simPWMs/`         | Creation and analysis of synthetic PWMs |
 | `10_DEbinding/`       | Comparing the DE binding modules of HINT and TOBIAS |
 | `11_chip/`            | Analysis using ChIP seq as the ground truth |
@@ -104,7 +104,7 @@ scFootprintBenchmark
 │   │   |    frip_sampling_stats.csv          : info about frip-downsampling dataset
 │   │ 
 │   └─── 05_cellsim/
-│   │   |    similarity_summary_stats.csv
+│   │   |    similarity_summary_stats.csv     : info about cell-similarity dataset
 |
 |
 └─── 05_scripts/
@@ -118,7 +118,7 @@ scFootprintBenchmark
 |
 └─── 05_footprinting/
 |   **NOTE**
-|   Due to size, its difficult to host the raw results -- though all are available upon request and I outline the size required for each below.
+|   Due to size, its difficult to host the raw results -- though most are available upon request and I outline the size required for each below.
 |   Instead, we host an example for what the directory looks like when containing only a single file (singleFile_exampleOutput.tar.gz)
 |   
 |   HINT directories contains *.info, *.bed, *mpbs.bed, for the summary, global FT, and local FT results respectively.
@@ -137,7 +137,7 @@ scFootprintBenchmark
 |   │   └─── hint/                            : info_stats.tar.gz (4K), denovo_beds.tar.gz (160M), mpbs_beds.tar.gz (600M)
 |   │   └─── print/                           : granges_beds.tar.gz (1.8G)
 |   │   └─── tobias/                          : bigwigs.tar.gz (15G), bindetect_global_TF_results.tar.gz (102K), bindetect_local_TF_results.tar.gz (8G)
-|   │   └─── pwm/                             : PWMmatch_beds.tar.gz (XX), PWMmatch_mats.tar.gz (600M)
+|   │   └─── pwm/                             : PWMmatch_beds.tar.gz (37G), PWMmatch_mats.tar.gz (600M)
 |   │
 │   └─── 02_cells/                            : cell-downsampling footprinting results
 |   │   └─── hint/                            : info_stats.tar.gz (5K), denovo_beds.tar.gz (4G), mpbs_beds.tar.gz (15G)
@@ -156,14 +156,14 @@ scFootprintBenchmark
 |   │
 │   └─── 04_frip/
 |   │   └─── hint/                            : info_stats.tar.gz (5K), denovo_beds.tar.gz (4G), mpbs_beds.tar.gz (15G)
-|   │   └─── print/                           : granges_beds.tar.gz (XXG)
+|   │   └─── print/                           : granges_beds.tar.gz (40G)
 |   │   └─── tobias/                          : bigwigs.tar.gz (350G), bindetect_global_TF_results.tar.gz (3M), bindetect_local_TF_results.tar.gz (180G)
 |   │   └─── pwm/                             : PWMmatch_beds.tar.gz (300G), PWMmatch_mats.tar.gz (15G)
 |   │   └─── macs3/                           : Peak calls for downsampled datasets (2G)
 |   │
 │   └─── 05_cellsim/
 |   │   └─── hint/                            : info_stats.tar.gz (3K), denovo_beds.tar.gz (5G), mpbs_beds.tar.gz (20G)
-|   │   └─── print/                           : granges_beds.tar.gz (XXG)
+|   │   └─── print/                           : granges_beds.tar.gz (26G)
 |   │   └─── tobias/                          : bigwigs.tar.gz (500G), bindetect_global_TF_results.tar.gz (2M), bindetect_local_TF_results.tar.gz (250G)
 |
 |
@@ -176,9 +176,9 @@ scFootprintBenchmark
 |   │   05_PeakConsistency.ipynb              : Analyses about the influence of peak coverage on performance metrics.
 |   │
 |   │   baseline_cleaned_beds.tar.gz          : unfiltered, but cleaned and standardized bed files for the original "baseline" samples. In each tool directory will create a "cleaned" directory. Available at Zenodo
-|   │   mats.tar.gz                           : standardized matrices for all tools and conditions. In each tool directory will create a "mats" directory. Available at Zenodo (06_dataquality-mats.tar.gz)
 |   │   
-│   └─── hint/ 
+│   └─── hint/
+|   │   └─── mats.tar.gz                      : standardized matrices for conditions. Available at Zenodo (06_dataquality-hint-mats.tar.gz)
 |   │   └─── metrics/                 
 |   │   │   └─── no_threshold/                : metrics considering all peaks
 |   │   │   |   │    metrics.tar.gz           : per dataset performance metrics
@@ -189,6 +189,7 @@ scFootprintBenchmark
 |   │   │   |   │    *_bytf.csv               : per condiditon metrics calculated over TFs
 |   │                 
 │   └─── print/
+|   │   └─── mats.tar.gz                      : standardized matrices for conditions. Available at Zenodo (06_dataquality-print-mats.tar.gz)
 |   │   └─── metrics/                 
 |   │   │   └─── thresh_03/                   : metrics using 0.3 as score threshold
 |   │   │   |   │    metrics.tar.gz           : per dataset performance metrics
@@ -199,6 +200,7 @@ scFootprintBenchmark
 |   │   │   |   │    *_bytf.csv               : per condiditon metrics calculated over TFs
 |   │   │ 
 │   └─── tobias/
+|   │   └─── mats.tar.gz                      : standardized matrices for conditions. Available at Zenodo (06_dataquality-tobias-mats.tar.gz)
 |   │   └─── metrics/                 
 |   │   │   └─── bound_threshold/             : metrics using bound = 1 as threshold
 |   │   │   |   │    metrics.tar.gz           : per dataset performance metrics
